@@ -5,7 +5,7 @@ public class GetURLContent {
     public static void main(String[] args) {
         System.out.println("Hello, World");
         try{
-            open_url_file("https://boilerlink.purdue.edu/Organizations");
+            open_url_file("http://lemonbear.tk/test.html");
         }catch(Exception e){
             System.out.println("MalformedURLException");
         }
