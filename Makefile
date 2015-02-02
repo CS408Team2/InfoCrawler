@@ -12,7 +12,7 @@ GetURLContentTest.class: GetURLContentTest.java
 	$(JCC) GetURLContentTest.java
 
 InfoCrawler.class: InfoCrawler.java
-	$(JCC) InfoCrawler.class
+	$(JCC) InfoCrawler.java
 
 clean: 
 	$(RM) *.class
