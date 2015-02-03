@@ -9,6 +9,14 @@ public class InfoCrawler {
         regular_command_check(input_string);
         return input_string;
     }
+    public static String input_URL(){
+        Console console = System.console();
+        System.out.print("URL:");
+        String input_string = console.readLine();
+        regular_command_check(input_string);
+        input_string = http_check(input_string);
+        return input_string;
+    }
     public static void regular_command_check(String s){
         if(s.equals("-q")){
             System.exit(0);
@@ -47,43 +55,64 @@ public class InfoCrawler {
         }
         return mode;
     }
-    public static void main(String[] args) {
-        System.out.println("Welcome to InfoCrawler\n-h For help\n-q Exit the program\n======Please Select Mode======\n-r Repeat Mode\n-p Periodic Mode");
+    public static void setup(){
         Console console = System.console();
         String URL_file;
         String input_string;
-        String BaseURL;
+        String BaseURL;//Base URL with increment variable in -r mode
+        //Repeat Mode Increment Range
+        int increment_from = 0;
+        int increment_to = 0;
+        int i;
+        //Periodic Mode
+        int time_interval = 0;
         GetURLContent in = new GetURLContent();
-            int mode = 0;
-            while (mode==0){
-                mode = mode_selection();
-            }
-            if(mode==1){
-                //Repeat Mode
-                System.out.println("\n======Please enter the URL======");
-                input_string = input_command();
-                input_string = http_check(input_string);
+        int mode = 0;
+        while (mode==0){
+            mode = mode_selection();
+        }
+        if(mode==1){
+            //Repeat Mode
+            System.out.println("\n======Input URL again using 'XXX' to replace increment variable======");
+            BaseURL = input_URL();
+            System.out.println("\n======Input Increment Range======");
+            int range_set = 0;
+            while(range_set==0){
                 try{
-                    URL_file = in.open_url_file(input_string);
-                    System.out.println("\n======Input URL again using 'XXX' to replace increment variable======");
-                    input_string = input_command();
-                    input_string = http_check(input_string);
-                    BaseURL = input_string;
-                    
+                    System.out.print("From:");
+                    input_string = console.readLine();
+                    increment_from = Integer.parseInt(input_string);
+                    System.out.print("To:");
+                    input_string = console.readLine();
+                    increment_to = Integer.parseInt(input_string);
+                    range_set=1;
                 }catch(Exception e){
-                    e.printStackTrace();
-                }
+                    System.out.println("Please input a Integer");
                 
-            }else if(mode==2){
-                //Periodic Mode
-                System.out.println("\n======Please enter the URL=====");
-                input_string = input_command();
-                input_string = http_check(input_string);
-                try{
-                    URL_file = in.open_url_file(input_string);
-                }catch(Exception e){
-                    e.printStackTrace();
                 }
             }
+            for(i=increment_from;i<increment_to;i++){
+                
+            }
+        }else if(mode==2){
+            //Periodic Mode
+            System.out.println("\n======Please enter the URL=====");
+            BaseURL = input_URL();
+            System.out.println("\n======Input Time Interval======");
+            System.out.print("Seconds:");
+            int interval_time_set = 0;
+            while(interval_time_set==0){
+                try{
+                    input_string = console.readLine();
+                    time_interval = Integer.parseInt(input_string);
+                }catch(Exception e){
+                    System.out.println("Please input a Integer");
+                }
+            }
+        }
+    }
+    public static void main(String[] args) {
+        System.out.println("Welcome to InfoCrawler\n-h For help\n-q Exit\n======Please Select Mode======\n-r Repeat Mode\n-p Periodic Mode");
+        setup();
     }
 }
