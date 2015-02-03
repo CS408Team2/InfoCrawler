@@ -4,6 +4,7 @@ import java.io.*;
 public class InfoCrawler {
     public static String input_command(){
         Console console = System.console();
+        System.out.print("Command:");
         String input_string = console.readLine();
         regular_command_check(input_string);
         return input_string;
@@ -18,6 +19,10 @@ public class InfoCrawler {
     }
     public static String http_check(String s){
         String return_string;
+        if(s.length()<7){
+            return_string = s;
+            return return_string;
+        }
         if(s.substring(0,7).equals("http://")==false){
             return_string = "http://"+s;
         }else{
@@ -32,7 +37,6 @@ public class InfoCrawler {
         // Repeat Mode 1
         // Periodic Mode 2
         String input_string;
-        System.out.print("Command:");
         input_string = input_command();
         if(input_string.equals("-r")){
             mode = 1;
@@ -57,24 +61,22 @@ public class InfoCrawler {
             if(mode==1){
                 //Repeat Mode
                 System.out.println("\n======Please enter the URL======");
-                System.out.print("Command:");
                 input_string = input_command();
                 input_string = http_check(input_string);
                 try{
                     URL_file = in.open_url_file(input_string);
+                    System.out.println("\n======Input URL again using 'XXX' to replace increment variable======");
+                    input_string = input_command();
+                    input_string = http_check(input_string);
+                    BaseURL = input_string;
+                    
                 }catch(Exception e){
                     e.printStackTrace();
                 }
-                System.out.println("\n======Input URL again using 'XXX' to replace increment variable======");
-                System.out.print("Command:");
-                input_string = input_command();
-                input_string = http_check(input_string);
-                BaseURL = input_string;
                 
             }else if(mode==2){
                 //Periodic Mode
                 System.out.println("\n======Please enter the URL=====");
-                System.out.print("Command:");
                 input_string = input_command();
                 input_string = http_check(input_string);
                 try{
