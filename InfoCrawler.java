@@ -26,7 +26,13 @@ public class InfoCrawler {
         input_string = http_check(input_string);
         return input_string;
     }
-    
+    public static String notification_selection(){
+        Console console = System.console();
+        System.out.print("Command:");
+        String input_string = console.readLine();
+        regular_command_check(input_string);
+        return input_string;
+    }
     public static void regular_command_check(String s){
         if(s.equals("-q")){
             System.exit(0);
@@ -90,6 +96,8 @@ public class InfoCrawler {
         Console console = System.console();
         String URL_file;
         String input_string;
+        String start_keyword="";
+        String end_keyword="";
         String BaseURL = "";//Base URL with increment variable in -r mode
         //Repeat Mode Increment Range
         int increment_from = 0;
@@ -122,9 +130,6 @@ public class InfoCrawler {
                     System.out.println("Please input a Integer");
                 }
             }
-            while(method==0){
-                method = method_selection();
-            }
         }
         else if(mode==2){
             //Periodic Mode
@@ -142,16 +147,46 @@ public class InfoCrawler {
                     System.out.println("Please input a Integer");
                 }
             }
-            while(method==0){
-                method = method_selection();
+        }
+        int keyword_set = 0;
+        while(keyword_set==0){
+            System.out.println("\n=====Please Enter Starting keyword and Ending keyword=====");
+            System.out.println("Input Start Keyword:");
+            start_keyword = input_keyword();
+            System.out.println("Input End Keyword:");
+            end_keyword = input_keyword();
+            keyword_set = 1;
+        }
+        while(method==0){
+            method = method_selection();
+        }
+        int notification_set = 0;
+        boolean notification_selection = false;
+        System.out.println("\n=====E-mail Notifications=====");
+        while(notification_set==0){
+            System.out.println("Do you want to receive e-mail Notifications?(y/n)");
+            input_string = notification_selection();
+            if(input_string.equals("y")){
+                notification_selection = true;
+                notification_set = 1;
+            }else if(input_string.equals("n")){
+                notification_selection = false;
+                notification_set = 1;
+            }else{
+                System.out.println("Yes/No? (y/n) input y or n only");
             }
         }
+        
+        
         set.mode = mode;
         set.increment_to = increment_to;
         set.increment_from = increment_from;
         set.increment_times = increment_from - increment_to;
         set.time_interval = time_interval;
         set.BaseURL = BaseURL;
+        set.start_keyword = start_keyword;
+        set.end_keyword = end_keyword;
+        set.notification_select = notification_selection;
         return set;
     }
     public static void main(String[] args) {
