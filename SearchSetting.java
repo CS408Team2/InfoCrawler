@@ -8,6 +8,8 @@ class SearchSetting {
     public int increment_times = 0;
     public int time_interval = 0;
     public boolean notification_select = false;
+    public String notification_email;
+    public String job_name;
     public String get_BaseURL() {
         return BaseURL;
     }

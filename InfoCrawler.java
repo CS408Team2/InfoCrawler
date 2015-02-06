@@ -2,33 +2,49 @@ import java.net.*;
 import java.io.*;
 
 public class InfoCrawler {
-    public static String input_command(){
+    public static int input_concurrency(){
+        int return_result = 0;
         Console console = System.console();
-        System.out.print("Command:");
-        String input_string = console.readLine();
-        regular_command_check(input_string);
-        return input_string;
+        System.out.println("\n=====Add new Job=====");
+        int choice_set = 0;
+        while(choice_set==0){
+            System.out.println("Do you want to add more job?(y/n)");
+            System.out.print("Command:");
+            String input_string = console.readLine();
+            regular_command_check(input_string);
+            if(input_string.equals("n")){
+                choice_set = 1;
+                return 0;
+            }else if(input_string.equals("y")){
+                choice_set = 1;
+                System.out.println("How many more?(Max:4 Currently:1)");
+                int set = 0;
+                while(set==0){
+                    try{
+                        System.out.print("Command:");
+                        input_string = console.readLine();
+                        return_result = Integer.parseInt(input_string);
+                        if(return_result>3){
+                            System.out.println("Only support max 4 at the same time");
+                        }else if(return_result<0){
+                            System.out.println("Invalid");
+                        }else{
+                            set = 1;
+                        }
+                    }catch(Exception e){
+                        System.out.println("Please input a Integer");
+                    }
+
+                }
+            }else{
+                System.out.print("Choose y or n");
+            }
+        }
+        return return_result;
     }
-    public static String input_URL(){
+    public static String input_command(String word){
         Console console = System.console();
-        System.out.print("URL:");
-        String input_string = console.readLine();
-        regular_command_check(input_string);
-        input_string = http_check(input_string);
-        return input_string;
-    }
-    
-    public static String input_keyword(){
-        Console console = System.console();
-        System.out.print("keyword:");
-        String input_string = console.readLine();
-        regular_command_check(input_string);
-        input_string = http_check(input_string);
-        return input_string;
-    }
-    public static String notification_selection(){
-        Console console = System.console();
-        System.out.print("Command:");
+        System.out.print(word);
         String input_string = console.readLine();
         regular_command_check(input_string);
         return input_string;
@@ -64,7 +80,7 @@ public class InfoCrawler {
         String start_keyword;
         String end_keyword;
         System.out.println("\n======Please Select Mode======\n-r Repeat Mode\n-p Periodic Mode");
-        input_string = input_command();
+        input_string = input_command("Command:");
         if(input_string.equals("-r")){
             mode = 1;
         }else if(input_string.equals("-p")){
@@ -80,7 +96,7 @@ public class InfoCrawler {
         int method = 0;
         String input_string;
         System.out.println("\n======Please Select Available Method======\n-w Word by Word\n-r Regular Expression");
-        input_string = input_command();
+        input_string = input_command("Command:");
         if(input_string.equals("-w")){
             method = 1;
         }else if(input_string.equals("-r")){
@@ -114,7 +130,7 @@ public class InfoCrawler {
         if(mode==1){
             //Repeat Mode
             System.out.println("\n======Input URL again using 'XXX' to replace increment variable======");
-            BaseURL = input_URL();
+            BaseURL = input_command("URL:");
             System.out.println("\n======Input Increment Range======");
             int range_set = 0;
             while(range_set==0){
@@ -134,7 +150,7 @@ public class InfoCrawler {
         else if(mode==2){
             //Periodic Mode
             System.out.println("\n======Please enter the URL=====");
-            BaseURL = input_URL();
+            BaseURL = input_command("URL:");
             System.out.println("\n======Input Time Interval======");
             int interval_time_set = 0;
             while(interval_time_set == 0){
@@ -152,23 +168,26 @@ public class InfoCrawler {
         while(keyword_set==0){
             System.out.println("\n=====Please Enter Starting keyword and Ending keyword=====");
             System.out.println("Input Start Keyword:");
-            start_keyword = input_keyword();
+            start_keyword = input_command("Keyword:");
             System.out.println("Input End Keyword:");
-            end_keyword = input_keyword();
+            end_keyword = input_command("Keyword:");
             keyword_set = 1;
         }
         while(method==0){
             method = method_selection();
         }
         int notification_set = 0;
+        String notification_email="";
         boolean notification_selection = false;
         System.out.println("\n=====E-mail Notifications=====");
         while(notification_set==0){
             System.out.println("Do you want to receive e-mail Notifications?(y/n)");
-            input_string = notification_selection();
+            input_string = input_command("Command:");
             if(input_string.equals("y")){
                 notification_selection = true;
                 notification_set = 1;
+                System.out.println("Input your email address");
+                notification_email = input_command("Email:");
             }else if(input_string.equals("n")){
                 notification_selection = false;
                 notification_set = 1;
@@ -176,8 +195,10 @@ public class InfoCrawler {
                 System.out.println("Yes/No? (y/n) input y or n only");
             }
         }
-        
-        
+        String job_name = "";
+        System.out.println("\nName your job(Can be empty)");
+        System.out.print("Name:");
+        job_name = console.readLine();
         set.mode = mode;
         set.increment_to = increment_to;
         set.increment_from = increment_from;
@@ -187,11 +208,24 @@ public class InfoCrawler {
         set.start_keyword = start_keyword;
         set.end_keyword = end_keyword;
         set.notification_select = notification_selection;
+        set.notification_email = notification_email;
+        set.job_name = job_name;
         return set;
     }
     public static void main(String[] args) {
         System.out.println("=====Welcome to InfoCrawler=====\n-h For help\n-q Exit");
-        SearchSetting set = setup();
-        System.out.println(set.BaseURL);
+        SearchSetting[] set =  new SearchSetting[4];
+        //set[0] = setup();
+        int concurrency = 0;
+        //concurrency = input_concurrency();
+        int i;
+        for(i=0;i<concurrency;i++){
+            //set[i+1] = setup();
+        }
+        MyThread[] myThread = new MyThread[4];
+        for(i=0;i<4;i++){
+            myThread[i] = new MyThread(set[i],i);
+            myThread[i].start();
+        }
     }
 }
