@@ -57,19 +57,6 @@ public class InfoCrawler {
         }
         return;
     }
-    public static String http_check(String s){
-        String return_string;
-        if(s.length()<7){
-            return_string = s;
-            return return_string;
-        }
-        if(s.substring(0,7).equals("http://")==false){
-            return_string = "http://"+s;
-        }else{
-            return_string = s;
-        }
-        return return_string;
-    }
     public static int mode_selection(){
         Console console = System.console();
         int mode = 0;
@@ -108,6 +95,7 @@ public class InfoCrawler {
     }
     
     public static SearchSetting setup(){
+        int url_set = 0;
         SearchSetting set = new SearchSetting();
         Console console = System.console();
         String URL_file;
@@ -129,28 +117,56 @@ public class InfoCrawler {
         }
         if(mode==1){
             //Repeat Mode
-            System.out.println("\n======Input URL again using 'XXX' to replace increment variable======");
-            BaseURL = input_command("URL:");
-            System.out.println("\n======Input Increment Range======");
-            int range_set = 0;
-            while(range_set==0){
-                try{
-                    System.out.print("From:");
-                    input_string = console.readLine();
-                    increment_from = Integer.parseInt(input_string);
-                    System.out.print("To:");
-                    input_string = console.readLine();
-                    increment_to = Integer.parseInt(input_string);
-                    range_set=1;
-                }catch(Exception e){
-                    System.out.println("Please input a Integer");
+            System.out.println("\n======Input URL using 'XXX' to replace increment variable======");
+            System.out.println("Also add 'http://' or 'https://' in front");
+            while(url_set==0){
+                BaseURL = input_command("URL:");
+                set.BaseURL = BaseURL;
+                if(BaseURL.contains("XXX")){
+                    int t = BaseURL.indexOf("XXX");
+                    System.out.println("\n======Input Increment Range======");
+                    int range_set = 0;
+                    while(range_set==0){
+                        try{
+                            System.out.print("From:");
+                            input_string = console.readLine();
+                            increment_from = Integer.parseInt(input_string);
+                            System.out.print("To:");
+                            input_string = console.readLine();
+                            increment_to = Integer.parseInt(input_string);
+                            range_set=1;
+                        }catch(Exception e){
+                            System.out.println("Please input a Integer");
+                        }
+                    }
+                    String replace = String.valueOf(increment_from);
+                    BaseURL = BaseURL.substring(0,t)+replace+BaseURL.substring(t+3);
+                    //System.out.println(BaseURL);
+                    try{
+                        in.open_url_file(BaseURL);
+                        url_set = 1;
+                    }catch(Exception e){
+                        System.out.println("Invalid URL!");
+                    }
+                }else{
+                    System.out.println("Using 'XXX' to replace increment variable");
                 }
             }
         }
         else if(mode==2){
             //Periodic Mode
             System.out.println("\n======Please enter the URL=====");
-            BaseURL = input_command("URL:");
+            System.out.println("Also add 'http://' or 'https://' in front");
+            while(url_set==0){
+                try{
+                    BaseURL = input_command("URL:");
+                    in.open_url_file(BaseURL);
+                    url_set = 1;
+                }catch(Exception e){
+                    System.out.println("Invalid URL!");
+                }
+            }
+            set.BaseURL = BaseURL;
             System.out.println("\n======Input Time Interval======");
             int interval_time_set = 0;
             while(interval_time_set == 0){
@@ -166,7 +182,7 @@ public class InfoCrawler {
         }
         int keyword_set = 0;
         while(keyword_set==0){
-            System.out.println("\n=====Please Enter Starting keyword and Ending keyword=====");
+            System.out.println("\n=====Please Enter Starting keyword and Ending keyword=====");            
             System.out.println("Input Start Keyword:");
             start_keyword = input_command("Keyword:");
             System.out.println("Input End Keyword:");
@@ -204,7 +220,6 @@ public class InfoCrawler {
         set.increment_from = increment_from;
         set.increment_times = increment_from - increment_to;
         set.time_interval = time_interval;
-        set.BaseURL = BaseURL;
         set.start_keyword = start_keyword;
         set.end_keyword = end_keyword;
         set.notification_select = notification_selection;
@@ -215,15 +230,18 @@ public class InfoCrawler {
     public static void main(String[] args) {
         System.out.println("=====Welcome to InfoCrawler=====\n-h For help\n-q Exit");
         SearchSetting[] set =  new SearchSetting[4];
-        //set[0] = setup();
+        set[0] = setup();
         int concurrency = 0;
-        //concurrency = input_concurrency();
+        concurrency = input_concurrency();
         int i;
         for(i=0;i<concurrency;i++){
-            //set[i+1] = setup();
+            System.out.print("\n======Job No.");
+            System.out.print(i+2);
+            System.out.print(" Set up======");
+            set[i+1] = setup();
         }
         MyThread[] myThread = new MyThread[4];
-        for(i=0;i<4;i++){
+        for(i=0;i<concurrency+1;i++){
             myThread[i] = new MyThread(set[i],i);
             myThread[i].start();
         }

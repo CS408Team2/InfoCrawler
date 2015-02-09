@@ -10,8 +10,18 @@ class SearchSetting {
     public boolean notification_select = false;
     public String notification_email;
     public String job_name;
+    
     public String get_BaseURL() {
         return BaseURL;
+    }
+    public String get_start_keyword() {
+        return start_keyword;
+    }
+    public String get_ned_keyword() {
+        return end_keyword;
+    }
+    public int get_mode() {
+        return mode;
     }
     public int get_increment_from() {
         return increment_from;
@@ -24,5 +34,14 @@ class SearchSetting {
     }
     public int get_time_interval() {
         return time_interval;
+    }
+    public boolean get_notification_select() {
+        return notification_select;
+    }
+    public String get_notification_email() {
+        return notification_email;
+    }
+    public String get_job_name() {
+        return job_name;
     }
 }
