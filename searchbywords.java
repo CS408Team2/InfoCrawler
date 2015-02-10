@@ -6,6 +6,7 @@ Given a string as input, find the string between 2 keywords
 import java.util.*;
 import java.io.*;
 
+public class Searchbywords{
 
  String[]  searchbywords(String input,String key1,String key2){
         
@@ -43,5 +44,7 @@ import java.io.*;
             results[m]=input.substring(key1index[m]+key1length,key2index[m]);
         }
         
+        
         return results;
     }
+}
