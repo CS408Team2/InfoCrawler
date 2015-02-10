@@ -6,36 +6,29 @@ import java.util.regex.Pattern;
 
 public class RegularExpressionSearch {
     
-    public static String RegularExpressionSearch(String input, String key1, String key2){
-        
-        // If given string does not contain key1 or key2 return ""
-        
-        String regexKey1Check = key1;
-        String regexKey2Check = key2;
-        
-        Pattern pKey1Check = Pattern.compile(regexKey1Check);
-        Matcher mKey1Ckeck = pKey1Check.matcher(input);
-        
-        Pattern pKey2Check = Pattern.compile(regexKey2Check);
-        Matcher mKey2Ckeck = pKey2Check.matcher(input);
-        
-        if(!mKey1Ckeck.lookingAt() || !mKey2Ckeck.lookingAt()){
-            return "";
-        }
+    
+    public static void main(String [] args){
+        RegularExpressionSearch("wwasdasuu", "ww", "uu");
+    }
+    
+    
+    public static String[] RegularExpressionSearch(String input, String key1, String key2){
         
         // If input only contain exautly key1 + key 2, return ""
         
-        String Key1AndKey2 = key1+key2;
+        String Key1AndKey2 = key1 + key2;
         Pattern pKey1AndKey2Check = Pattern.compile(Key1AndKey2);
         Matcher mKey1AndKey2Check = pKey1AndKey2Check.matcher(input);
+        
         if(mKey1AndKey2Check.matches()){
-            return "";
+            System.out.println("If input only contain exautly key1 + key 2, return ");
+            return null;
         }
         
         // Get how many times key1 and key2 does input string contain
         
-        String regexKey1 = "\\b" + key1 + "\\b";
-        String regexKey2 = "\\b" + key2 + "\\b";
+        String regexKey1 = key1;
+        String regexKey2 = key2;
         
         Pattern pKey1 = Pattern.compile(regexKey1);
         Matcher mKey1 = pKey1.matcher(input);
@@ -50,11 +43,19 @@ public class RegularExpressionSearch {
             countKey1++;
         }
         while(mKey2.find()){
+            System.out.println("1");
             countKey2++;
         }
         
-        System.out.println(countKey1);
-        System.out.println(countKey2);
+        // If input does not contain any of key words, return
+        
+        if(countKey1 == 0 || countKey2 == 0){
+            System.out.println("If input does not contain any of key words, return");
+            return null;
+        }
+        
+        System.out.println("" + countKey1);
+        System.out.println("" + countKey2);
 
         // Get min number of countKey1 and countKey2
         
@@ -64,7 +65,7 @@ public class RegularExpressionSearch {
         
         //String result[] = new String[min];
         
-        String result = "";
+        String[] result = new String[min];
         
         
         
