@@ -36,7 +36,7 @@ String[] results searchbywords(String input,String key1,String key2){
       
     }
     
-  int numofkeyspairs=key1index.length;
+  int numofkeypairs=key1index.length;
 
    for(int m=0;m<numofkeypairs;m++){
       results[m]=input.substring(key1index[m],key2index[m]);
