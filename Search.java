@@ -1,15 +1,5 @@
-public class MyThread extends Thread {
-    SearchSetting set;
-    int job_no = 0;
-    public MyThread(SearchSetting s, int i) {
-        // store parameter for later user
-        set = s;
-        job_no = i;
-    }
-    public void run() {
-        Search(set);
-    }
-    public String Search(SearchSetting s){
+public class Search {
+    public String search(SearchSetting s){
         int i = 0;
         String target_url;
         if(s.get_mode() == 1){
@@ -23,7 +13,8 @@ public class MyThread extends Thread {
             while(true){
                 System.out.println(target_url);
                 try {
-                    Thread.sleep(s.time_interval*1000);                 //1000 milliseconds is one second.
+                    Thread.sleep(s.time_interval*1000);
+                    //1000 milliseconds is one second.
                 } catch(InterruptedException ex) {
                     Thread.currentThread().interrupt();
                 }

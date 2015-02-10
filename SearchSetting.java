@@ -2,12 +2,15 @@ class SearchSetting {
     public String BaseURL;
     public String start_keyword;
     public String end_keyword;
+    public HTMLElement html_keyword;
     public int mode = 0;
+    public int method = 0;
     public int increment_from = 0;
     public int increment_to = 0;
     public int increment_times = 0;
     public int time_interval = 0;
     public boolean notification_select = false;
+    public boolean html_element_select = false;
     public String notification_email;
     public String job_name;
     

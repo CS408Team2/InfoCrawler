@@ -112,6 +112,7 @@ public class InfoCrawler {
         GetURLContent in = new GetURLContent();
         int mode = 0;
         int method = 0;
+        HTMLElement h = new HTMLElement();
         while (mode==0){
             mode = mode_selection();
         }
@@ -181,12 +182,45 @@ public class InfoCrawler {
             }
         }
         int keyword_set = 0;
+        int html_element_set = 0;
+        boolean html_element_select = false;
         while(keyword_set==0){
-            System.out.println("\n=====Please Enter Starting keyword and Ending keyword=====");            
-            System.out.println("Input Start Keyword:");
-            start_keyword = input_command("Keyword:");
-            System.out.println("Input End Keyword:");
-            end_keyword = input_command("Keyword:");
+            System.out.println("\n=====Please Enter Starting keyword and Ending keyword=====");
+            html_element_set = 0;
+            while(html_element_set==0){
+                System.out.println("Do you want to search HTML element?(y/n)");
+                input_string = input_command("Command:");
+                if(input_string.equals("y")){
+                    html_element_select = true;
+                    html_element_set = 1;
+                }else if(input_string.equals("n")){
+                    html_element_select = false;
+                    html_element_set = 1;
+                }else{
+                    System.out.println("Yes/No? (y/n) input y or n only");
+                }
+            }
+            if(html_element_select==true){
+                set.html_element_select = html_element_select;
+                int html_element_select_set = 0;
+                while(html_element_select_set==0){
+                    System.out.println("\nInput HTML Element without '<>'");
+                    input_string = input_command("HTML Element:");
+                    if(h.html_element_check(input_string)==true){
+                        html_element_select_set = 1;
+                        h.html_element_keyword_set(input_string);
+                    }else{
+                        System.out.print(input_string);
+                        System.out.println(" is not a HTML Element");
+                    }
+                }
+                
+            }else{
+                System.out.println("Input Start Keyword:");
+                start_keyword = input_command("Keyword:");
+                System.out.println("Input End Keyword:");
+                end_keyword = input_command("Keyword:");
+            }
             keyword_set = 1;
         }
         while(method==0){
@@ -225,6 +259,8 @@ public class InfoCrawler {
         set.notification_select = notification_selection;
         set.notification_email = notification_email;
         set.job_name = job_name;
+        set.method = method;
+        set.html_keyword = h;
         return set;
     }
     public static void main(String[] args) {
