@@ -1,3 +1,10 @@
+/*
+This class use reglar expression to search string between 2 key words.
+If anything prevent search or any errors happen durning search, a NULL will be returned.
+If number of keyword1 and keyword2 does not match, the middle keyword will be discard.
+If keyword2 is in front of keyword1, this function will return empty string in that specific location in string array
+*/
+
 import java.net.*;
 import java.io.*;
 import java.util.regex.Matcher;
@@ -8,7 +15,7 @@ public class RegularExpressionSearch {
     
     
     public static void main(String [] args){
-        RegularExpressionSearch("wwasdasuu", "ww", "uu");
+        RegularExpressionSearch("wwawwsduuasuu", "ww", "uu");
     }
     
     
@@ -54,16 +61,9 @@ public class RegularExpressionSearch {
             return null;
         }
         
-        System.out.println("" + countKey1);
-        System.out.println("" + countKey2);
-
         // Get min number of countKey1 and countKey2
         
         int min = getMin(countKey1, countKey2);
-        
-        //
-        
-        //String result[] = new String[min];
         
         String[] result = new String[min];
         
@@ -72,14 +72,17 @@ public class RegularExpressionSearch {
         
         //test regex ------------
         
+        /*String toSearch = key1 + "(.*?)" + key2;
+        
+        Pattern pToSearch = Pattern.compile(toSearch);
+        
+        Matcher mToSearch = pToSearch.matcher(input);
         
         
-        
-        
-        
-        
-        
-        
+        if (mToSearch.find())
+        {
+            System.out.println(mToSearch.group(2));
+        }*/
         
         
         
@@ -87,11 +90,25 @@ public class RegularExpressionSearch {
         return result;
     }
     
+    // Get minimum number of 2 integer
+    
     public static int getMin(int num1, int num2){
         if(num1 <= num2){
             return num1;
         }else{
             return num2;
         }
+    }
+    
+    // Replace keyword in input
+    
+    public static int replaceKeyWord(){
+        
+    }
+    
+    // Replace keyword back in input
+    
+    public static int replaceBackKeyWord(){
+        
     }
 }
