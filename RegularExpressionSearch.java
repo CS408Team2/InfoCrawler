@@ -10,13 +10,18 @@ import java.io.*;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-
 public class RegularExpressionSearch {
     
     
-    public static void main(String [] args){
-        RegularExpressionSearch("wwawwsduuasuu", "ww", "uu");
-    }
+    /*public static void main(String [] args){
+        String[] test = new String[3];
+        test = RegularExpressionSearch("<td>One</td>asd asd  asd<td>two</td>asq,.<tj> <td>tjree</td>", "<td>", "</td>");
+        for(int i = 0; i < 3; i++){
+            System.out.println(test[i]);
+        }
+        //RegularExpressionSearch("<td>One</td>asd asd  asd <td>two</td>asq <td>tjree</td> ", "<td>", "</td>");
+        //RegularExpressionSearch("qqa swwda a qq sdads ww", "qq", "ww");
+    }*/
     
     
     public static String[] RegularExpressionSearch(String input, String key1, String key2){
@@ -28,7 +33,6 @@ public class RegularExpressionSearch {
         Matcher mKey1AndKey2Check = pKey1AndKey2Check.matcher(input);
         
         if(mKey1AndKey2Check.matches()){
-            System.out.println("If input only contain exautly key1 + key 2, return ");
             return null;
         }
         
@@ -50,43 +54,35 @@ public class RegularExpressionSearch {
             countKey1++;
         }
         while(mKey2.find()){
-            System.out.println("1");
             countKey2++;
         }
         
-        // If input does not contain any of key words, return
+        // If input does not contain one or both of key words, return
         
         if(countKey1 == 0 || countKey2 == 0){
-            System.out.println("If input does not contain any of key words, return");
             return null;
         }
         
         // Get min number of countKey1 and countKey2
         
         int min = getMin(countKey1, countKey2);
-        
         String[] result = new String[min];
         
+        int key1Length = key1.length();
+        int key2Length = key2.length();
         
+        keyWordStruct myKeywords[] = new keyWordStruct[min * 2];
+        Pattern pattern = Pattern.compile(key1 + "(.*?)" + key2);
+        Matcher matcher = pattern.matcher(input);
         
-        
-        //test regex ------------
-        
-        /*String toSearch = key1 + "(.*?)" + key2;
-        
-        Pattern pToSearch = Pattern.compile(toSearch);
-        
-        Matcher mToSearch = pToSearch.matcher(input);
-        
-        
-        if (mToSearch.find())
-        {
-            System.out.println(mToSearch.group(2));
-        }*/
-        
-        
-        
-        
+        int count = 0;
+        while (matcher.find()) {
+            if(count < min){
+                result[count] = matcher.group(1);
+                count++;
+            }
+        }
+
         return result;
     }
     
@@ -98,17 +94,5 @@ public class RegularExpressionSearch {
         }else{
             return num2;
         }
-    }
-    
-    // Replace keyword in input
-    
-    public static int replaceKeyWord(){
-        
-    }
-    
-    // Replace keyword back in input
-    
-    public static int replaceBackKeyWord(){
-        
     }
 }
