@@ -10,7 +10,6 @@ import java.io.*;
 
 String[] results searchbywords(String input,String key1,String key2){
 
-    int key1length=key1.length();
     //may need to chage the size of the array
     int []key1index=new int[1000];
     int []key2index=new int[1000];
@@ -40,7 +39,7 @@ String[] results searchbywords(String input,String key1,String key2){
   int numofkeyspairs=key1index.length;
 
    for(int m=0;m<numofkeypairs;m++){
-      results[m]=input.substring(key1index[m],key2index[m]-key2length+1);
+      results[m]=input.substring(key1index[m],key2index[m]);
    }
 
 return results;
