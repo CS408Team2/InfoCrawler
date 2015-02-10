@@ -5,14 +5,30 @@ import java.util.regex.Pattern;
 
 
 public class RegularExpressionSearch {
-    public static String[] RegularExpressionSearch(String input, String key1, String key2){
+    
+    public static String RegularExpressionSearch(String input, String key1, String key2){
         
-        String result = "";
+        // If given string does not contain key1 or key2 return ""
         
-        // If input only contain key1 + key 2, return
+        String regexKey1Check = key1;
+        String regexKey2Check = key2;
+        
+        Pattern pKey1Check = Pattern.compile(regexKey1Check);
+        Matcher mKey1Ckeck = pKey1Check.matcher(input);
+        
+        Pattern pKey2Check = Pattern.compile(regexKey2Check);
+        Matcher mKey2Ckeck = pKey2Check.matcher(input);
+        
+        if(!mKey1Ckeck.lookingAt() || !mKey2Ckeck.lookingAt()){
+            return "";
+        }
+        
+        // If input only contain exautly key1 + key 2, return ""
         
         String Key1AndKey2 = key1+key2;
-        if(input == Key1AndKey2){
+        Pattern pKey1AndKey2Check = Pattern.compile(Key1AndKey2);
+        Matcher mKey1AndKey2Check = pKey1AndKey2Check.matcher(input);
+        if(mKey1AndKey2Check.matches()){
             return "";
         }
         
@@ -46,7 +62,23 @@ public class RegularExpressionSearch {
         
         //
         
-        String result[] = new String[min];
+        //String result[] = new String[min];
+        
+        String result = "";
+        
+        
+        
+        
+        //test regex ------------
+        
+        
+        
+        
+        
+        
+        
+        
+        
         
         
         
@@ -61,5 +93,4 @@ public class RegularExpressionSearch {
             return num2;
         }
     }
-
 }
