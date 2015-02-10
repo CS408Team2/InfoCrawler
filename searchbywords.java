@@ -8,7 +8,7 @@ import java.io.*;
 
 
 
-String[] results searchbywords(String input,String key1,String key2){
+String[] searchbywords(String input,String key1,String key2){
 
     //may need to chage the size of the array
     int []key1index=new int[1000];
@@ -31,8 +31,8 @@ String[] results searchbywords(String input,String key1,String key2){
    while(l=input.indexOf(key2,l)>-1){
       //System.out.println("indeix is"+l);
       key2index[k]=l;
-      l++
-      k++
+      l++;
+      k++;
       
     }
     
