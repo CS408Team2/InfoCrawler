@@ -1,5 +1,5 @@
-Written by YIJIE WU
-Given a string as input, find the string between 2 keywords
+//Written by YIJIE WU
+//Given a string as input, find the string between 2 keywords
 
 
 
@@ -22,7 +22,7 @@ public class Searchbywords{
         int k=0;
         
         while((i=input.indexOf(key1,i))>-1){
-            System.out.println("indeix is"+i);
+            //System.out.println("indeix is"+i);
             key1index[j]=i;
             i++;
             j++;
@@ -30,7 +30,7 @@ public class Searchbywords{
         
         
         while((l=input.indexOf(key2,l))>-1){
-            System.out.println("indeix is"+l);
+            //System.out.println("indeix is"+l);
             key2index[k]=l;
             l++;
             k++;
