@@ -68,10 +68,6 @@ public class RegularExpressionSearch {
         int min = getMin(countKey1, countKey2);
         String[] result = new String[min];
         
-        int key1Length = key1.length();
-        int key2Length = key2.length();
-        
-        keyWordStruct myKeywords[] = new keyWordStruct[min * 2];
         Pattern pattern = Pattern.compile(key1 + "(.*?)" + key2);
         Matcher matcher = pattern.matcher(input);
         
