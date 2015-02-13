@@ -3,9 +3,10 @@ public class Search {
         int i = 0;
         String target_url;
         String target_file="";
-        String[] result = new String[1000];
+        String[] result = new String[10000];
         GetURLContent in = new GetURLContent();
         Searchbywords search = new Searchbywords();
+        RegularExpressionSearch r_search = new RegularExpressionSearch();
         if(s.get_mode() == 1){
             //R
             for(i=s.increment_from;i<s.increment_to+1;i++){
@@ -17,8 +18,10 @@ public class Search {
                 }
                 if(s.method==1){
                     result = search.searchbywords(target_file,s.start_keyword,s.end_keyword);
+                }else if(s.method==2){
+                    result = r_search.RegularExpressionSearch(target_file,s.start_keyword,s.end_keyword);
                 }
-                while(result[i]!=null){
+                while(i<r_search.array_length||result[i]!=null){
                     System.out.println(result[i]);
                     i++;
                 }
@@ -34,9 +37,13 @@ public class Search {
                 }
                 if(s.method==1){
                     result = search.searchbywords(target_file,s.start_keyword,s.end_keyword);
+                }else if(s.method==2){
+                    result = r_search.RegularExpressionSearch(target_file,s.start_keyword,s.end_keyword);
                 }
-                i=0;
-                while(result[i]!=null){
+                i = 0;
+                while(i<r_search.array_length||result[i]!=null){
+                    System.out.println(r_search.array_length);
+                    System.out.println(i);
                     System.out.println(result[i]);
                     i++;
                 }

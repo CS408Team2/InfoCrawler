@@ -10,9 +10,8 @@ import java.io.*;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-public class RegularExpressionSearch {
-    
-    
+class RegularExpressionSearch {
+    public int array_length;
     /*public static void main(String [] args){
         String[] test = new String[3];
         test = RegularExpressionSearch("<td>One</td>asd asd  asd<td>two</td>asq,.<tj> <td>tjree</td>", "<td>", "</td>");
@@ -23,8 +22,7 @@ public class RegularExpressionSearch {
         //RegularExpressionSearch("qqa swwda a qq sdads ww", "qq", "ww");
     }*/
     
-    
-    public static String[] RegularExpressionSearch(String input, String key1, String key2){
+    public String[] RegularExpressionSearch(String input, String key1, String key2){
         
         // If input only contain exautly key1 + key 2, return ""
         
@@ -67,7 +65,7 @@ public class RegularExpressionSearch {
         
         int min = getMin(countKey1, countKey2);
         String[] result = new String[min];
-        
+        array_length = min;
         Pattern pattern = Pattern.compile(key1 + "(.*?)" + key2);
         Matcher matcher = pattern.matcher(input);
         
@@ -78,7 +76,6 @@ public class RegularExpressionSearch {
                 count++;
             }
         }
-
         return result;
     }
     
