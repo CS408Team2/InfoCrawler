@@ -21,10 +21,10 @@ public class Search {
                 }else if(s.method==2){
                     result = r_search.RegularExpressionSearch(target_file,s.start_keyword,s.end_keyword);
                 }
-                while(i<r_search.array_length||result[i]!=null){
+                /*while(i<r_search.array_length||result[i]!=null){
                     System.out.println(result[i]);
                     i++;
-                }
+                }*/
             }
         }else if(s.get_mode() == 2){
             //P
@@ -41,12 +41,7 @@ public class Search {
                     result = r_search.RegularExpressionSearch(target_file,s.start_keyword,s.end_keyword);
                 }
                 i = 0;
-                while(i<r_search.array_length||result[i]!=null){
-                    System.out.println(r_search.array_length);
-                    System.out.println(i);
-                    System.out.println(result[i]);
-                    i++;
-                }
+                
                 try {
                     Thread.sleep(s.time_interval*1000);
                     //1000 milliseconds is one second.

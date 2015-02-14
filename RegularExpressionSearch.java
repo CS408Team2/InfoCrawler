@@ -76,6 +76,10 @@ class RegularExpressionSearch {
                 count++;
             }
         }
+        int i;
+        for(i=0;i<min;i++){
+            System.out.println(result[i]);
+        }
         return result;
     }
     
