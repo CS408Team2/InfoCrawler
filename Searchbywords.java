@@ -12,9 +12,9 @@ public class Searchbywords{
         
         int key1length=key1.length();
         //may need to chage the size of the array
-        int []key1index=new int[1000];
-        int []key2index=new int[1000];
-        String[] results=new String[1000];
+        int []key1index=new int[input.length()];
+        int []key2index=new int[input.length()];
+        String[] results=new String[input.length()];
         
         int i=0;
         int l=0;
