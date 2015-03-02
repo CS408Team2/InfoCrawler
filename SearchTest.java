@@ -18,6 +18,7 @@ public class SearchTest{
         }catch(Exception e){
             System.out.println("TestCase1:Fail");
         }
+        
         testcase.method = 2;
         System.out.println("TestCase2:Boilerlink -r");
         try{
@@ -25,6 +26,31 @@ public class SearchTest{
             System.out.println("TestCase2:Pass");
         }catch(Exception e){
             System.out.println("TestCase2:Fail");
+        }
+        
+        // Test cast3
+        System.out.println("TestCase3:key1 and key 2 empty");
+        testcase.start_keyword = "";
+        testcase.end_keyword = "";
+        try{
+            search_func.search(testcase);
+            System.out.println("TestCase3:Pass");
+        }catch(Exception e){
+            System.out.println("TestCase3:Fail");
+        }
+        
+        // Test case 4, testcast not working
+        System.out.println("TestCase4:key1 is empty");
+        testcase.start_keyword = "";
+        testcase.end_keyword = "</a>";
+        try{
+            if(search_func.search(testcase) == null){
+                System.out.println("TestCase4:Pass");
+            }else{
+                System.out.println("TestCase4:Fail");
+            }
+        }catch(Exception e){
+            System.out.println("TestCase4:Fail : excepition");
         }
     }
 }

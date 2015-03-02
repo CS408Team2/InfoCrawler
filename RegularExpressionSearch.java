@@ -52,12 +52,13 @@ class RegularExpressionSearch {
         if(key1 == "" && key2 == ""){
             firstcheck = 3;
         }else if(key1 == "" && key2 != ""){
-            firstcheck = 1;
-        }else if(key1 != "" && key2 == ""){
+            firstcheck = 1;        }
+        else if(key1 != "" && key2 == ""){
             firstcheck = 2;
         }
         
         if(firstcheck == 1 || firstcheck == 2){
+            System.out.println("!!!");
             return null;
         }
         
@@ -102,10 +103,6 @@ class RegularExpressionSearch {
                 result[count] = matcher.group(1);
                 count++;
             }
-        }
-        int i;
-        for(i=0;i<min;i++){
-            System.out.println(result[i]);
         }
         
         String temp = "";
