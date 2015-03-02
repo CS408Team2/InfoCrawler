@@ -11,7 +11,6 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 class RegularExpressionSearch {
-    long start = System.nanoTime();
     public int array_length;
     /*public static void main(String [] args){
         String[] test = new String[3];
@@ -24,16 +23,7 @@ class RegularExpressionSearch {
     }*/
     
     public SearchResult RegularExpressionSearch(String input, String key1, String key2){
-        
-        // If input only contain exautly key1 + key 2, return ""
-        
-        String Key1AndKey2 = key1 + key2;
-        Pattern pKey1AndKey2Check = Pattern.compile(Key1AndKey2);
-        Matcher mKey1AndKey2Check = pKey1AndKey2Check.matcher(input);
-        
-        if(mKey1AndKey2Check.matches()){
-            return null;
-        }
+        long start = System.nanoTime();
         
         // Get how many times key1 and key2 does input string contain
         
@@ -54,6 +44,42 @@ class RegularExpressionSearch {
         }
         while(mKey2.find()){
             countKey2++;
+        }
+        
+        // Check if any of keywords empty, 1:keyword1 is empty, 2:keyword2 is empty, 3:bothempty, 0 to go!!
+        
+        int firstcheck = 0;
+        if(key1 == "" && key2 == ""){
+            firstcheck = 3;
+        }else if(key1 == "" && key2 != ""){
+            firstcheck = 1;
+        }else if(key1 != "" && key2 == ""){
+            firstcheck = 2;
+        }
+        
+        if(firstcheck == 1 || firstcheck == 2){
+            return null;
+        }
+        
+        if(firstcheck == 3){
+            SearchResult theReturn = new SearchResult();
+            theReturn.result_string = input;
+            String[] result = new String[1];
+            result[0] = input;
+            theReturn.result_array = result;
+            theReturn.count = 1;
+            long elapsedTime = System.nanoTime() - start;
+            theReturn.time_used = elapsedTime;
+        }
+        
+        // If input only contain exautly key1 + key 2, return ""
+        
+        String Key1AndKey2 = key1 + key2;
+        Pattern pKey1AndKey2Check = Pattern.compile(Key1AndKey2);
+        Matcher mKey1AndKey2Check = pKey1AndKey2Check.matcher(input);
+        
+        if(mKey1AndKey2Check.matches()){
+            return null;
         }
         
         // If input does not contain one or both of key words, return
