@@ -11,6 +11,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 class RegularExpressionSearch {
+    long start = System.nanoTime();
     public int array_length;
     /*public static void main(String [] args){
         String[] test = new String[3];
@@ -22,7 +23,7 @@ class RegularExpressionSearch {
         //RegularExpressionSearch("qqa swwda a qq sdads ww", "qq", "ww");
     }*/
     
-    public String[] RegularExpressionSearch(String input, String key1, String key2){
+    public SearchResult RegularExpressionSearch(String input, String key1, String key2){
         
         // If input only contain exautly key1 + key 2, return ""
         
@@ -80,7 +81,22 @@ class RegularExpressionSearch {
         for(i=0;i<min;i++){
             System.out.println(result[i]);
         }
-        return result;
+        
+        String temp = "";
+        int k = 0;
+        for(k = 0; k < count; k++){
+            temp = temp + result[k] + "\n";
+        }
+        
+        long elapsedTime = System.nanoTime() - start;
+        
+        SearchResult theResult = new SearchResult();
+        theResult.count = count;
+        theResult.result_array = result;
+        theResult.result_string = temp;
+        theResult.time_used = elapsedTime;
+        
+        return theResult;
     }
     
     // Get minimum number of 2 integer
