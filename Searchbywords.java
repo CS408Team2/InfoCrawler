@@ -35,7 +35,7 @@ public class Searchbywords{
             l++;
             k++;
             
-        }
+        }/*
         if(i==-1&&l==-1){
          String aa[1]=input;
          return aa;
@@ -60,7 +60,7 @@ public class Searchbywords{
             //System.out.println("kkkk"+ key1index[m]);
             //System.out.println("aaaa"+ (key1length-1));
             results[m]=input.substring(key1index[m]+key1length,key2index[m]);
-        }
+        }*/
         
         
         return results;
