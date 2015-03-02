@@ -35,6 +35,9 @@ SearchSetting.class: SearchSetting.java
 RegularExpressionSearch.class: RegularExpressionSearch.java
 	$(JCC) RegularExpressionSearch.java
 
+ExchangeWord.class: ExchangeWord.java
+	$(JCC) ExchangeWord.java
+
 WordByWordSearch.class: WordByWordSearch.java
 	$(JCC) WordByWordSearch.java
 
