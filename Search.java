@@ -3,9 +3,11 @@ public class Search {
         int i = 0;
         String target_url;
         String target_file="";
+        System.out.println(s.start_keyword+s.end_keyword);
         String[] result = new String[10000];
         GetURLContent in = new GetURLContent();
         Searchbywords search = new Searchbywords();
+        SearchResult search_result = new SearchResult();
         RegularExpressionSearch r_search = new RegularExpressionSearch();
         if(s.get_mode() == 1){
             //R
@@ -17,14 +19,11 @@ public class Search {
                     e.printStackTrace();
                 }
                 if(s.method==1){
-                    result = search.searchbywords(target_file,s.start_keyword,s.end_keyword);
+                    //search_result = search.searchbywords(target_file,s.start_keyword,s.end_keyword);
                 }else if(s.method==2){
-                    result = r_search.RegularExpressionSearch(target_file,s.start_keyword,s.end_keyword);
+                    search_result = r_search.RegularExpressionSearch(target_file,s.start_keyword,s.end_keyword);
                 }
-                /*while(i<r_search.array_length||result[i]!=null){
-                    System.out.println(result[i]);
-                    i++;
-                }*/
+                
             }
         }else if(s.get_mode() == 2){
             //P
@@ -36,9 +35,9 @@ public class Search {
                     e.printStackTrace();
                 }
                 if(s.method==1){
-                    result = search.searchbywords(target_file,s.start_keyword,s.end_keyword);
+                    //search_result = search.searchbywords(target_file,s.start_keyword,s.end_keyword);
                 }else if(s.method==2){
-                    result = r_search.RegularExpressionSearch(target_file,s.start_keyword,s.end_keyword);
+                    search_result = r_search.RegularExpressionSearch(target_file,s.start_keyword,s.end_keyword);
                 }
                 i = 0;
                 

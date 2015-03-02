@@ -23,8 +23,7 @@ class HTMLElement {
             i++;
         }
         element_start = "<" + html_element[index];
-        element_end = "<" + html_element[index] + ">";
-        System.out.println(element_end);
-        
+        element_end = "<" + "/" + html_element[index] + ">";
+        //System.out.println(element_end);
     }
 }

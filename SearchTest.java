@@ -10,7 +10,7 @@ public class SearchTest{
         //1 word by word, 2 reg
         testcase.increment_from = 0;
         testcase.increment_to = 1;
-        System.out.println("TestCase1:Boilerlink -r -w");
+        System.out.println("TestCase1:Boilerlink -w");
         Search search_func = new Search();
         try{
             search_func.search(testcase);
@@ -19,7 +19,7 @@ public class SearchTest{
             System.out.println("TestCase1:Fail");
         }
         testcase.method = 2;
-        System.out.println("TestCase2:Boilerlink -r -r");
+        System.out.println("TestCase2:Boilerlink -r");
         try{
             search_func.search(testcase);
             System.out.println("TestCase2:Pass");

@@ -261,6 +261,10 @@ public class InfoCrawler {
         set.job_name = job_name;
         set.method = method;
         set.html_keyword = h;
+        if(html_element_select = true){
+            set.start_keyword = h.element_start;
+            set.end_keyword = h.element_end;
+        }
         return set;
     }
     public static void main(String[] args) {
