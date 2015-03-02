@@ -50,6 +50,7 @@ public class Searchbywords{
          return aa;
         }
         
+        int size=0;
         if(j>k)
         size=k;
         else
