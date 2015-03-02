@@ -36,9 +36,26 @@ public class Searchbywords{
             k++;
             
         }
+        if(i==-1&&l==-1){
+         String aa[1]=input;
+         return aa;
+        }
         
+        if(i!=-1&&l==-1){
+         String aa[1]="";
+         return aa;
+        }
+        if(i==-1&&l!=-1){
+         String aa[1]="";
+         return aa;
+        }
         
-        for(int m=0;m<j;m++){
+        if(j>k)
+        size=k;
+        else
+        size=j;
+        
+        for(int m=0;m<size;m++){
             //System.out.println("kkkk"+ key1index[m]);
             //System.out.println("aaaa"+ (key1length-1));
             results[m]=input.substring(key1index[m]+key1length,key2index[m]);
