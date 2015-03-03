@@ -1,7 +1,8 @@
 import java.net.*;
 import java.io.*;
-
-public class InfoCrawler {
+import java.lang.*;
+import java.awt.event.KeyEvent;
+public class InfoCrawler  {
     public static int input_concurrency(){
         int return_result = 0;
         Console console = System.console();

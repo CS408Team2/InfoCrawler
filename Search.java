@@ -28,25 +28,15 @@ public class Search {
         }else if(s.get_mode() == 2){
             //P
             target_url = s.BaseURL;
-            while(true){
-                try{
-                    target_file = in.open_url_file(target_url);
-                }catch( Exception e){
-                    e.printStackTrace();
-                }
-                if(s.method==1){
-                    search_result = search.searchbywords(target_file,s.start_keyword,s.end_keyword);
-                }else if(s.method==2){
-                    search_result = r_search.RegularExpressionSearch(target_file,s.start_keyword,s.end_keyword);
-                }
-                i = 0;
-                
-                try {
-                    Thread.sleep(s.time_interval*1000);
-                    //1000 milliseconds is one second.
-                } catch(InterruptedException ex) {
-                    Thread.currentThread().interrupt();
-                }
+            try{
+                target_file = in.open_url_file(target_url);
+            }catch( Exception e){
+                e.printStackTrace();
+            }
+            if(s.method==1){
+                search_result = search.searchbywords(target_file,s.start_keyword,s.end_keyword);
+            }else if(s.method==2){
+                search_result = r_search.RegularExpressionSearch(target_file,s.start_keyword,s.end_keyword);
             }
         }else{
             System.out.println("Mode Bug");

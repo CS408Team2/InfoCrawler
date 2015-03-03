@@ -3,9 +3,10 @@ public class SearchTest{
     public static String fail[] = new String[10];
     public static int count_pass=0;
     public static int count_fail=0;
+    public static SearchSetting testcase = new SearchSetting();
+    public static Search search_func = new Search();
+    public static SearchResult search_result = new SearchResult();
     public static void testing(SearchSetting testcase,int i,String description,String match_key){
-        SearchResult search_result = new SearchResult();
-        Search search_func = new Search();
         String testcase_num = String.valueOf(i);
         System.out.println("=====TestCase"+testcase_num+"====");
         System.out.println("TestCase"+testcase_num+": "+description);
@@ -28,9 +29,7 @@ public class SearchTest{
         }
     }
     public static void main(String[] args) {
-        SearchSetting testcase = new SearchSetting();
-        Search search_func = new Search();
-        SearchResult search_result = new SearchResult();
+        
         //BoilerLink Test Case
         String match_key = "&quot;A Cause for Paws&quot; (ACP)\n21st Century Scholars (Scholar Corps for 21st Century Scholars)\n3D Printing Club (3DPC)\nA Cultural Connection promoting Leadership opportunities and Academic achievement for International and Multicultural students (ACCLAIM)\nA Global Friendship Campus Club Purdue University (AGF Campus Club)\nAAE Graduate Women’s Gathering (AAE GWG)\nAcacia\nAcademy of Student Pharmacists (APhA-ASP)\nAccounting Association (PAA)\nACM SIGGRAPH\nView Recommended Organizations\nManage Your Interests";
         
@@ -46,22 +45,30 @@ public class SearchTest{
         //Test Case 1 Basic Search WordByWord
         //BoilerLink
         testing(testcase,1,"Boilerlink -r WordByWordSearch",match_key);
+        //System.out.println(search_result.result_string);
+
         
         // Test Case 2 Two Empty String
         testcase.start_keyword = "";
         testcase.end_keyword = "";
         testing(testcase,2,"Key1 and Key 2 Empty WordByWordSearch",match_key);
+        //System.out.println(search_result.result_string);
+
         
         
         // Test Case 3 Key1 is Empty
         testcase.start_keyword = "";
         testcase.end_keyword = "</a>";
         testing(testcase,3,"Key1 Empty WordByWordSearch","");
+        //System.out.println(search_result.result_string);
+
         
         // Test Case 4 Key2 is Empty
         testcase.start_keyword = "<a";
         testcase.end_keyword = "";
         testing(testcase,4,"Key2 Empty WordByWordSearch","");
+        //System.out.println(search_result.result_string);
+
         
         //Test Case 5 Basic Search Reg Search
         //BoilerLink
@@ -69,23 +76,43 @@ public class SearchTest{
         testcase.start_keyword = "target=\"_self\">";
         testcase.end_keyword = "</a>";
         testing(testcase,5,"Boilerlink -r RegSearch",match_key);
+        //System.out.println(search_result.result_string);
+
         
         // Test Case 6 Two Empty String
         testcase.start_keyword = "";
         testcase.end_keyword = "";
         testing(testcase,6,"Key1 and Key 2 Empty RegSearch",match_key);
+        //System.out.println(search_result.result_string);
+
         
         
         // Test Case 7 Key1 is Empty
         testcase.start_keyword = "";
         testcase.end_keyword = "</a>";
         testing(testcase,7,"Key1 Empty RegSearch","");
+        //System.out.println(search_result.result_string);
+
         
         // Test Case 8 Key2 is Empty
         testcase.start_keyword = "<a";
         testcase.end_keyword = "";
         testing(testcase,8,"Key2 Empty RegSearch","");
+        //System.out.println(search_result.result_string);
 
+
+        // Test Case 9 Test HTML Element
+        testcase.start_keyword = "<h3";
+        testcase.end_keyword = "</h3>";
+        testing(testcase,9,"HTML elemnt RegSearch", " id=\"aria-label-sideColumn\" class=\"sideHeading\" style=\"border:0;float:left;\">Browse Orgs");
+        //System.out.println(search_result.result_string);
+        
+        // Test Case 10 Test HTML Element
+        testcase.method = 1;
+        testcase.start_keyword = "<h3";
+        testcase.end_keyword = "</h3>";
+        testing(testcase,10,"HTML elemnt WordByWordSearch", " id=\"aria-label-sideColumn\" class=\"sideHeading\" style=\"border:0;float:left;\">Browse Orgs");
+        //System.out.println(search_result.result_string);
 
         System.out.println("=====Passed Test Case=====");
         int i;
