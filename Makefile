@@ -44,5 +44,8 @@ WordByWordSearch.class: WordByWordSearch.java
 InfoCrawler.class: InfoCrawler.java
 	$(JCC) InfoCrawler.java
 
+GUI.class: GUI.java
+	$(JCC) GUI.java
+
 clean: 
 	$(RM) *.class
