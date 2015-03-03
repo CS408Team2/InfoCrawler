@@ -108,7 +108,11 @@ class RegularExpressionSearch {
         String temp = "";
         int k = 0;
         for(k = 0; k < count; k++){
-            temp = temp + result[k] + "\n";
+            if(k==count-1){
+                temp = temp + result[k];
+            }else{
+                temp = temp + result[k] + "\n";
+            }
         }
         
         long elapsedTime = System.nanoTime() - start;

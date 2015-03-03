@@ -1,56 +1,101 @@
 public class SearchTest{
+    public static String pass[] = new String[10];
+    public static String fail[] = new String[10];
+    public static int count_pass=0;
+    public static int count_fail=0;
+    public static void testing(SearchSetting testcase,int i,String description,String match_key){
+        SearchResult search_result = new SearchResult();
+        Search search_func = new Search();
+        String testcase_num = String.valueOf(i);
+        System.out.println("=====TestCase"+testcase_num+"====");
+        System.out.println("TestCase"+testcase_num+": "+description);
+        try{
+            search_result = search_func.search(testcase);
+            if(search_result.result_string.equals(match_key)){
+                System.out.println("TestCase"+testcase_num+": Pass\n");
+                pass[count_pass] = "TestCase"+testcase_num;
+                count_pass++;
+            }else{
+                System.out.println("TestCase"+testcase_num+": Fail Wrong Result\n");
+                fail[count_fail] = "TestCase"+testcase_num;
+                count_fail++;
+            }
+        }catch(Exception e){
+            e.printStackTrace();
+            System.out.println("TestCase"+testcase_num+": Fail! Exception\n");
+            fail[count_fail] = "TestCase"+testcase_num;
+            count_fail++;
+        }
+    }
     public static void main(String[] args) {
         SearchSetting testcase = new SearchSetting();
+        Search search_func = new Search();
+        SearchResult search_result = new SearchResult();
+        //BoilerLink Test Case
+        String match_key = "&quot;A Cause for Paws&quot; (ACP)\n21st Century Scholars (Scholar Corps for 21st Century Scholars)\n3D Printing Club (3DPC)\nA Cultural Connection promoting Leadership opportunities and Academic achievement for International and Multicultural students (ACCLAIM)\nA Global Friendship Campus Club Purdue University (AGF Campus Club)\nAAE Graduate Women’s Gathering (AAE GWG)\nAcacia\nAcademy of Student Pharmacists (APhA-ASP)\nAccounting Association (PAA)\nACM SIGGRAPH\nView Recommended Organizations\nManage Your Interests";
+        
         testcase.BaseURL = "https://boilerlink.purdue.edu/Organizations?SearchType=None&SelectedCategoryId=0&CurrentPage=XXX";
         testcase.start_keyword = "target=\"_self\">";
         testcase.end_keyword = "</a>";
-        testcase.mode = 1;
-        //r
-        testcase.method = 1;
-        //1 word by word, 2 reg
+        testcase.mode = 1;//r
+        testcase.method = 1;//1 word by word, 2 reg
         testcase.increment_from = 0;
         testcase.increment_to = 1;
-        System.out.println("TestCase1:Boilerlink -w");
-        Search search_func = new Search();
-        try{
-            search_func.search(testcase);
-            System.out.println("TestCase1:Pass");
-        }catch(Exception e){
-            System.out.println("TestCase1:Fail");
-        }
+
         
-        testcase.method = 2;
-        System.out.println("TestCase2:Boilerlink -r");
-        try{
-            search_func.search(testcase);
-            System.out.println("TestCase2:Pass");
-        }catch(Exception e){
-            System.out.println("TestCase2:Fail");
-        }
+        //Test Case 1 Basic Search WordByWord
+        //BoilerLink
+        testing(testcase,1,"Boilerlink -r WordByWordSearch",match_key);
         
-        // Test cast3
-        System.out.println("TestCase3:key1 and key 2 empty");
+        // Test Case 2 Two Empty String
         testcase.start_keyword = "";
         testcase.end_keyword = "";
-        try{
-            search_func.search(testcase);
-            System.out.println("TestCase3:Pass");
-        }catch(Exception e){
-            System.out.println("TestCase3:Fail");
-        }
+        testing(testcase,2,"Key1 and Key 2 Empty WordByWordSearch",match_key);
         
-        // Test case 4, testcast not working
-        System.out.println("TestCase4:key1 is empty");
+        
+        // Test Case 3 Key1 is Empty
         testcase.start_keyword = "";
         testcase.end_keyword = "</a>";
-        try{
-            if(search_func.search(testcase) == null){
-                System.out.println("TestCase4:Pass");
-            }else{
-                System.out.println("TestCase4:Fail");
-            }
-        }catch(Exception e){
-            System.out.println("TestCase4:Fail : excepition");
+        testing(testcase,3,"Key1 Empty WordByWordSearch","");
+        
+        // Test Case 4 Key2 is Empty
+        testcase.start_keyword = "<a";
+        testcase.end_keyword = "";
+        testing(testcase,4,"Key2 Empty WordByWordSearch","");
+        
+        //Test Case 5 Basic Search Reg Search
+        //BoilerLink
+        testcase.method = 2;
+        testcase.start_keyword = "target=\"_self\">";
+        testcase.end_keyword = "</a>";
+        testing(testcase,5,"Boilerlink -r RegSearch",match_key);
+        
+        // Test Case 6 Two Empty String
+        testcase.start_keyword = "";
+        testcase.end_keyword = "";
+        testing(testcase,6,"Key1 and Key 2 Empty RegSearch",match_key);
+        
+        
+        // Test Case 7 Key1 is Empty
+        testcase.start_keyword = "";
+        testcase.end_keyword = "</a>";
+        testing(testcase,7,"Key1 Empty RegSearch","");
+        
+        // Test Case 8 Key2 is Empty
+        testcase.start_keyword = "<a";
+        testcase.end_keyword = "";
+        testing(testcase,8,"Key2 Empty RegSearch","");
+
+
+        System.out.println("=====Passed Test Case=====");
+        int i;
+        for(i=0;i<count_pass;i++){
+            System.out.println(pass[i]);
+        }
+        System.out.println("");
+        System.out.println("=====Failed Test Case=====");
+        for(i=0;i<count_fail;i++){
+            System.out.println(fail[i]);
         }
     }
 }

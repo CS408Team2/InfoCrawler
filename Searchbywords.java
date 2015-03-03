@@ -7,9 +7,8 @@ import java.util.*;
 import java.io.*;
 
 public class Searchbywords{
-
- String[]  searchbywords(String input,String key1,String key2){
-        
+        SearchResult searchbywords(String input,String key1,String key2){
+            SearchResult search_result = new SearchResult();
         int key1length=key1.length();
         //may need to chage the size of the array
         int []key1index=new int[input.length()];
@@ -63,6 +62,6 @@ public class Searchbywords{
         }*/
         
         
-        return results;
+        return search_result;
     }
 }
