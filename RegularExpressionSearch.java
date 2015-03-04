@@ -58,8 +58,14 @@ class RegularExpressionSearch {
         }
         
         if(firstcheck == 1 || firstcheck == 2){
-            System.out.println("!!!");
-            return null;
+            SearchResult theReturn = new SearchResult();
+            theReturn.result_string = "";
+            String[] result = new String[0];
+            theReturn.result_array = result;
+            theReturn.count = 0;
+            long elapsedTime = System.nanoTime() - start;
+            theReturn.time_used = elapsedTime;
+            return theReturn;
         }
         
         if(firstcheck == 3){
@@ -71,6 +77,7 @@ class RegularExpressionSearch {
             theReturn.count = 1;
             long elapsedTime = System.nanoTime() - start;
             theReturn.time_used = elapsedTime;
+            return theReturn;
         }
         
         // If input only contain exautly key1 + key 2, return ""
