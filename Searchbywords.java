@@ -7,8 +7,12 @@ import java.util.*;
 import java.io.*;
 
 public class Searchbywords{
-        SearchResult searchbywords(String input,String key1,String key2){
-            SearchResult search_result = new SearchResult();
+        
+
+
+
+	String[] searchbywords(String input,String key1,String key2){
+
         int key1length=key1.length();
         //may need to chage the size of the array
         int []key1index=new int[input.length()];
@@ -21,7 +25,7 @@ public class Searchbywords{
         int k=0;
         
         while((i=input.indexOf(key1,i))>-1){
-            //System.out.println("indeix is"+i);
+          //  System.out.println("indeix is"+i);
             key1index[j]=i;
             i++;
             j++;
@@ -34,21 +38,32 @@ public class Searchbywords{
             l++;
             k++;
             
-        }/*
-        if(i==-1&&l==-1){
-         String aa[1]=input;
+        }
+
+         
+        if(j==0&&k==0){
+         String aa[]=new String[1];
+         aa[0]=input;
          return aa;
         }
         
-        if(i!=-1&&l==-1){
-         String aa[1]="";
+        if(j!=0&&k==0){
+         String aa[]=new String[1];
+         aa[0]="";
          return aa;
         }
-        if(i==-1&&l!=-1){
-         String aa[1]="";
+        if(j!=0&&k==0){
+         String aa[]=new String[1];
+         aa[0]="";
          return aa;
         }
         
+
+//System.out.println("j is "+j);
+//System.out.println("k is "+k);
+		int idx1=0;
+		int idx2=0;
+
         int size=0;
         if(j>k)
         size=k;
@@ -56,12 +71,17 @@ public class Searchbywords{
         size=j;
         
         for(int m=0;m<size;m++){
-            //System.out.println("kkkk"+ key1index[m]);
-            //System.out.println("aaaa"+ (key1length-1));
-            results[m]=input.substring(key1index[m]+key1length,key2index[m]);
-        }*/
+           // System.out.println("kkkk"+ key1index[m]);
+           // System.out.println("aaaa"+ (key1length-1));
+			while(key1index[idx1]+key1length>key2index[idx2]){
+           		//results[m]=input.substring(key1index[m]+key1length,key2index[m]);
+				idx2++;
+			}
+            results[m]=input.substring(key1index[idx1]+key1length,key2index[idx2]);
+			idx1++;
+			//System.out.println(results[m]);
+        }
         
         
-        return search_result;
+        return results;
     }
-}
