@@ -11,8 +11,9 @@ public class Searchbywords{
 
 
 
-	String[] searchbywords(String input,String key1,String key2){
-
+	SearchResult searchbywords(String input,String key1,String key2){
+		
+	long start = System.nanoTime();
         int key1length=key1.length();
         //may need to chage the size of the array
         int []key1index=new int[input.length()];
@@ -44,18 +45,24 @@ public class Searchbywords{
         if(j==0&&k==0){
          String aa[]=new String[1];
          aa[0]=input;
-         return aa;
+         long elapsedTime = System.nanoTime() - start;
+         SearchResult sr=new SearchResult(input,aa,elapsedTime,1);
+         return sr;
         }
         
         if(j!=0&&k==0){
          String aa[]=new String[1];
          aa[0]="";
-         return aa;
+         long elapsedTime = System.nanoTime() - start;
+         SearchResult sr=new SearchResult("",aa,elapsedTime,0);
+         return sr;
         }
         if(j!=0&&k==0){
          String aa[]=new String[1];
          aa[0]="";
-         return aa;
+         long elapsedTime = System.nanoTime() - start;
+         SearchResult sr=new SearchResult("",aa,elapsedTime,0);
+         return sr;
         }
         
 
@@ -82,7 +89,13 @@ public class Searchbywords{
 			//System.out.println(results[m]);
         }
         
-        
-        return results;
+        String whole="";
+        for(int i=0;i<results.length;i++){
+        	whole=whole+results[i]
+        }
+       
+         long elapsedTime = System.nanoTime() - start;
+         SearchResult sr=new SearchResult(whole,results,elapsedTime,results.length);
+        return sr;
     }
 }
