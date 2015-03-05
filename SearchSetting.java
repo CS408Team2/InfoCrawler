@@ -13,6 +13,7 @@ class SearchSetting {
     public boolean html_element_select = false;
     public String notification_email;
     public String job_name;
+    int index;
     
     public String get_BaseURL() {
         return BaseURL;

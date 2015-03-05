@@ -6,6 +6,7 @@ public class SearchTest{
     public static SearchSetting testcase = new SearchSetting();
     public static Search search_func = new Search();
     public static SearchResult search_result = new SearchResult();
+    public static GetURLContent content = new GetURLContent();
     public static void testing(SearchSetting testcase,int i,String description,String match_key){
         String testcase_num = String.valueOf(i);
         System.out.println("=====TestCase"+testcase_num+"====");
@@ -32,14 +33,15 @@ public class SearchTest{
         
         //BoilerLink Test Case
         String match_key = "&quot;A Cause for Paws&quot; (ACP)\n21st Century Scholars (Scholar Corps for 21st Century Scholars)\n3D Printing Club (3DPC)\nA Cultural Connection promoting Leadership opportunities and Academic achievement for International and Multicultural students (ACCLAIM)\nA Global Friendship Campus Club Purdue University (AGF Campus Club)\nAAE Graduate Women’s Gathering (AAE GWG)\nAcacia\nAcademy of Student Pharmacists (APhA-ASP)\nAccounting Association (PAA)\nACM SIGGRAPH\nView Recommended Organizations\nManage Your Interests";
-        
         testcase.BaseURL = "https://boilerlink.purdue.edu/Organizations?SearchType=None&SelectedCategoryId=0&CurrentPage=XXX";
         testcase.start_keyword = "target=\"_self\">";
         testcase.end_keyword = "</a>";
         testcase.mode = 1;//r
         testcase.method = 1;//1 word by word, 2 reg
-        testcase.increment_from = 0;
+        testcase.increment_from = 1;
         testcase.increment_to = 1;
+        testcase.index = 1;
+        String match_key2 = "";
 
         
         //Test Case 1 Basic Search WordByWord
@@ -51,12 +53,20 @@ public class SearchTest{
         // Test Case 2 Two Empty String
         testcase.start_keyword = "";
         testcase.end_keyword = "";
+        testcase.BaseURL = "http://ticketvault.cu.cc/test1.html";
+        try{
+            match_key2 = content.open_url_file(testcase.BaseURL);
+        }catch(Exception e){
+            
+        }
+        testcase.BaseURL = "http://ticketvault.cu.cc/testXXX.html";
         testing(testcase,2,"Key1 and Key 2 Empty WordByWordSearch",match_key);
         //System.out.println(search_result.result_string);
 
         
         
         // Test Case 3 Key1 is Empty
+        testcase.BaseURL = "https://boilerlink.purdue.edu/Organizations?SearchType=None&SelectedCategoryId=0&CurrentPage=XXX";
         testcase.start_keyword = "";
         testcase.end_keyword = "</a>";
         testing(testcase,3,"Key1 Empty WordByWordSearch","");
@@ -82,12 +92,21 @@ public class SearchTest{
         // Test Case 6 Two Empty String
         testcase.start_keyword = "";
         testcase.end_keyword = "";
-        testing(testcase,6,"Key1 and Key 2 Empty RegSearch",match_key);
+        testcase.BaseURL = "http://ticketvault.cu.cc/test1.html";
+        try{
+            match_key2 = content.open_url_file(testcase.BaseURL);
+        }catch(Exception e){
+            
+        }
+        testcase.BaseURL = "http://ticketvault.cu.cc/testXXX.html";
+        testing(testcase,6,"Key1 and Key 2 Empty RegSearch",match_key2);
         //System.out.println(search_result.result_string);
+        //System.out.println(match_key2);
 
         
         
         // Test Case 7 Key1 is Empty
+        testcase.BaseURL = "https://boilerlink.purdue.edu/Organizations?SearchType=None&SelectedCategoryId=0&CurrentPage=XXX";
         testcase.start_keyword = "";
         testcase.end_keyword = "</a>";
         testing(testcase,7,"Key1 Empty RegSearch","");

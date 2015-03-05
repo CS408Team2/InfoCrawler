@@ -11,7 +11,7 @@ public class Search {
         RegularExpressionSearch r_search = new RegularExpressionSearch();
         if(s.get_mode() == 1){
             //R
-            for(i=s.increment_from;i<s.increment_to+1;i++){
+            i = s.index;
                 target_url = replace_url_incremnet(i,s.BaseURL);
                 try{
                     target_file = in.open_url_file(target_url);
@@ -19,10 +19,9 @@ public class Search {
                     e.printStackTrace();
                 }
                 if(s.method==1){
-                    search_result = search.searchbywords(target_file,s.start_keyword,s.end_keyword);
+                    //search_result = search.searchbywords(target_file,s.start_keyword,s.end_keyword);
                 }else if(s.method==2){
                     search_result = r_search.RegularExpressionSearch(target_file,s.start_keyword,s.end_keyword);
-                }
                 
             }
         }else if(s.get_mode() == 2){
@@ -34,7 +33,7 @@ public class Search {
                 e.printStackTrace();
             }
             if(s.method==1){
-                search_result = search.searchbywords(target_file,s.start_keyword,s.end_keyword);
+                //search_result = search.searchbywords(target_file,s.start_keyword,s.end_keyword);
             }else if(s.method==2){
                 search_result = r_search.RegularExpressionSearch(target_file,s.start_keyword,s.end_keyword);
             }
