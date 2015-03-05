@@ -9,15 +9,18 @@ public class MyThread extends Thread {
     }
     public void run() {
         Search s = new Search();
-        SearchResult sr = new SearchResult();
+        //System.out.println(set.increment_times);
+        int count = 0;
+        if(set.increment_times!=0){
+            count = set.increment_times;
+        }else{
+            count = 1;
+        }
+        SearchResult sr[] = new SearchResult[count];
         if(set.mode == 2){
             while(true){
-                sr = s.search(set);
-                if(sr.result_string!=null){
-                    System.out.println(sr.result_string);
-                }else{
-                    System.out.println("Null");
-                }
+                sr[0] = s.search(set);
+                System.out.println(sr[0].result_string);
                 try {
                     Thread.sleep(set.time_interval*1000);
                     //1000 milliseconds is one second.
@@ -27,13 +30,37 @@ public class MyThread extends Thread {
             }
         }
         else if(set.mode == 1){
-            sr = s.search(set);
-            if(sr.result_string!=null){
-                System.out.println(sr.result_string);
-            }else{
-                System.out.println("Null");
+            int i;
+            int k = 0;
+            for(i=set.increment_from;i<set.increment_to;i++){
+                sr[k] = s.search(set);
+                set.index++;
+                k++;
             }
         }
+        if(set.mode == 1){
+            int i;
+            for(i=0;i<count;i++){
+                long threadId = Thread.currentThread().getId();
+                System.out.println(sr[i].result_string);
+            }
+        }
+        //Filter
+        ReplaceKeyword filter = new ReplaceKeyword();
+        System.out.println();
+        InfoCrawler info = new InfoCrawler();
+        int filter_set = 0;
+        String input_string = "";
+        while(filter_set==0){
+            System.out.println("Do you want to use filter?(y/n)");
+            input_string = info.input_command("Command:");
+            if(input_string.equals("y")){
+                filter_set = 1;
+            }else if(input_string.equals("n")){
+                filter_set = 1;
+            }
+        }
+        
     }
     
 }

@@ -253,7 +253,7 @@ public class InfoCrawler  {
         set.mode = mode;
         set.increment_to = increment_to;
         set.increment_from = increment_from;
-        set.increment_times = increment_from - increment_to;
+        set.increment_times = increment_to - increment_from;
         set.time_interval = time_interval;
         set.start_keyword = start_keyword;
         set.end_keyword = end_keyword;
@@ -262,7 +262,8 @@ public class InfoCrawler  {
         set.job_name = job_name;
         set.method = method;
         set.html_keyword = h;
-        if(html_element_select = true){
+        set.index = set.increment_from;
+        if(html_element_select == true){
             set.start_keyword = h.element_start;
             set.end_keyword = h.element_end;
         }

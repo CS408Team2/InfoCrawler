@@ -1,6 +1,9 @@
 JCC = javac
 
-all: InfoCrawler.class GetURLContentTest.class GetURLContent.class WordByWordSearch.class EmptyFileException.class SearchSetting.class RegularExpressionSearch.class MyThread.class HTMLElement.class Search.class Searchbywords.class SearchResult.class SearchTest.class GUI.class
+all: InfoCrawler.class GetURLContentTest.class GetURLContent.class WordByWordSearch.class EmptyFileException.class SearchSetting.class RegularExpressionSearch.class MyThread.class HTMLElement.class Search.class Searchbywords.class SearchResult.class SearchTest.class GUI.class ReplaceKeyword.class
+
+ReplaceKeyword.class:
+	$(JCC) ReplaceKeyword.java
 
 SearchTest.class: SearchTest.java
 	$(JCC) SearchTest.java
