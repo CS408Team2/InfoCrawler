@@ -43,25 +43,39 @@ public class Searchbywords{
 
          
         if(j==0&&k==0){
-         String aa[]=new String[1];
-         aa[0]=input;
-         long elapsedTime = System.nanoTime() - start;
-         SearchResult sr=new SearchResult(input,aa,elapsedTime,1);
-         return sr;
+            String aa[]=new String[1];
+            aa[0]=input;
+            long elapsedTime = System.nanoTime() - start;
+            
+            SearchResult sr = new SearchResult();
+            sr.result_string = input;
+            sr.result_array = aa;
+            sr.time_used = elapsedTime;
+            sr.count = 1;
+            return sr;
         }
         
         if(j!=0&&k==0){
          String aa[]=new String[1];
          aa[0]="";
          long elapsedTime = System.nanoTime() - start;
-         SearchResult sr=new SearchResult("",aa,elapsedTime,0);
+            SearchResult sr = new SearchResult();
+            sr.result_string = input;
+            sr.result_array = aa;
+            sr.time_used = elapsedTime;
+            sr.count = 0;
          return sr;
         }
         if(j!=0&&k==0){
          String aa[]=new String[1];
          aa[0]="";
-         long elapsedTime = System.nanoTime() - start;
-         SearchResult sr=new SearchResult("",aa,elapsedTime,0);
+            long elapsedTime = System.nanoTime() - start;
+
+            SearchResult sr = new SearchResult();
+            sr.result_string = input;
+            sr.result_array = aa;
+            sr.time_used = elapsedTime;
+            sr.count = 0;
          return sr;
         }
         
@@ -90,12 +104,16 @@ public class Searchbywords{
         }
         
         String whole="";
-        for(int i=0;i<results.length;i++){
-        	whole=whole+results[i]
+        for(i=0;i<results.length;i++){
+            whole=whole+results[i];
         }
        
          long elapsedTime = System.nanoTime() - start;
-         SearchResult sr=new SearchResult(whole,results,elapsedTime,results.length);
+        SearchResult sr = new SearchResult();
+        sr.result_string = whole;
+        sr.result_array = results;
+        sr.time_used = elapsedTime;
+        sr.count = results.length;
         return sr;
     }
 }

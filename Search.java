@@ -19,7 +19,7 @@ public class Search {
                     e.printStackTrace();
                 }
                 if(s.method==1){
-                    //search_result = search.searchbywords(target_file,s.start_keyword,s.end_keyword);
+                    search_result = search.searchbywords(target_file,s.start_keyword,s.end_keyword);
                 }else if(s.method==2){
                     //System.out.println(s.start_keyword+" "+s.end_keyword+" "+i);
                     search_result = r_search.RegularExpressionSearch(target_file,s.start_keyword,s.end_keyword);
@@ -34,7 +34,7 @@ public class Search {
                 e.printStackTrace();
             }
             if(s.method==1){
-                //search_result = search.searchbywords(target_file,s.start_keyword,s.end_keyword);
+                search_result = search.searchbywords(target_file,s.start_keyword,s.end_keyword);
             }else if(s.method==2){
                 search_result = r_search.RegularExpressionSearch(target_file,s.start_keyword,s.end_keyword);
             }
