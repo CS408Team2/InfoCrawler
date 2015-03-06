@@ -105,7 +105,14 @@ public class Searchbywords{
         
         String whole="";
         for(i=0;i<results.length;i++){
-            whole=whole+results[i];
+        	if(results[i]==null)
+        	break;
+        	if(i==0){
+            		whole=whole+results[i];
+        	}
+        	else{
+        		whole=whole+"\n"+results[i];
+        	}
         }
        
          long elapsedTime = System.nanoTime() - start;
