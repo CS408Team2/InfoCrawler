@@ -25,12 +25,52 @@ public class Searchbywords{
         int j=0;
         int k=0;
         
-        while((i=input.indexOf(key1,i))>-1){
-          //  System.out.println("indeix is"+i);
-            key1index[j]=i;
-            i++;
-            j++;
+        
+        
+        if("".equals(key1)&&"".equals(key2)){
+            String aa[]=new String[1];
+            aa[0]=input;
+            long elapsedTime = System.nanoTime() - start;
+            
+            SearchResult sr = new SearchResult();
+            sr.result_string = input;
+            sr.result_array = aa;
+            sr.time_used = elapsedTime;
+            sr.count = 1;
+            return sr;
+        	
         }
+	if("".equals(key1)){
+		String aa[]=new String[1];
+         	aa[0]="";
+         	long elapsedTime = System.nanoTime() - start;
+            	SearchResult sr = new SearchResult();
+            	sr.result_string = "";
+            	sr.result_array = aa;
+            	sr.time_used = elapsedTime;
+            	sr.count = 0;
+         	return sr;	
+	}
+	
+	if("".equals(key2)){
+		String aa[]=new String[1];
+         	aa[0]="";
+         	long elapsedTime = System.nanoTime() - start;
+            	SearchResult sr = new SearchResult();
+            	sr.result_string = "";
+            	sr.result_array = aa;
+            	sr.time_used = elapsedTime;
+            	sr.count = 0;
+         	return sr;	
+	}
+	
+        while((i=input.indexOf(key1,i))>-1){
+          		//  System.out.println("indeix is"+i);
+            		key1index[j]=i;
+            		i++;
+            		j++;
+        }
+	
         
         
         while((l=input.indexOf(key2,l))>-1){
@@ -42,42 +82,10 @@ public class Searchbywords{
         }
 
          
-        if(j==0&&k==0){
-            String aa[]=new String[1];
-            aa[0]=input;
-            long elapsedTime = System.nanoTime() - start;
-            
-            SearchResult sr = new SearchResult();
-            sr.result_string = input;
-            sr.result_array = aa;
-            sr.time_used = elapsedTime;
-            sr.count = 1;
-            return sr;
-        }
+      
         
-        if(j!=0&&k==0){
-         String aa[]=new String[1];
-         aa[0]="";
-         long elapsedTime = System.nanoTime() - start;
-            SearchResult sr = new SearchResult();
-            sr.result_string = input;
-            sr.result_array = aa;
-            sr.time_used = elapsedTime;
-            sr.count = 0;
-         return sr;
-        }
-        if(j!=0&&k==0){
-         String aa[]=new String[1];
-         aa[0]="";
-            long elapsedTime = System.nanoTime() - start;
-
-            SearchResult sr = new SearchResult();
-            sr.result_string = input;
-            sr.result_array = aa;
-            sr.time_used = elapsedTime;
-            sr.count = 0;
-         return sr;
-        }
+        
+       
         
 
 //System.out.println("j is "+j);
