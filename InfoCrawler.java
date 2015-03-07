@@ -2,6 +2,7 @@ import java.net.*;
 import java.io.*;
 import java.lang.*;
 import java.awt.event.KeyEvent;
+
 public class InfoCrawler  {
     public static int input_concurrency(){
         int return_result = 0;
@@ -270,7 +271,10 @@ public class InfoCrawler  {
         return set;
     }
     public static void main(String[] args) {
+        
         System.out.println("=====Welcome to InfoCrawler=====\n-h For help\n-q Exit");
+        
+
         SearchSetting[] set =  new SearchSetting[4];
         set[0] = setup();
         int concurrency = 0;

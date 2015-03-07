@@ -60,7 +60,7 @@ public class SearchTest{
             
         }
         testcase.BaseURL = "http://ticketvault.cu.cc/testXXX.html";
-        testing(testcase,2,"Key1 and Key 2 Empty WordByWordSearch",match_key);
+        testing(testcase,2,"Key1 and Key 2 Empty WordByWordSearch",match_key2);
         //System.out.println(search_result.result_string);
 
         
