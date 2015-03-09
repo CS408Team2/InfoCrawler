@@ -2,8 +2,8 @@
 import javax.swing.*;
 import javax.swing.text.*;
 
-import java.awt.*;              //for layout managers and more
-import java.awt.event.*;        //for action events
+import java.awt.*;
+import java.awt.event.*;
 
 //import java.net.URL;
 //import java.io.IOException;
@@ -50,11 +50,11 @@ public class InfoCrawlerGUI extends JPanel implements ActionListener {
         JLabel increTLabel = new JLabel(increTString + ": ");
         increTLabel.setLabelFor(increTField);
 
-        //Create a label to put messages during an action event.
+        //Info mention
         actionLabel = new JLabel("Type text in a field and press Enter.");
         actionLabel.setBorder(BorderFactory.createEmptyBorder(10,0,0,0));
         
-        //Lay out the text controls and the labels.
+        //Text and label
         JPanel textControlsPane = new JPanel();
         GridBagLayout gridbag = new GridBagLayout();
         GridBagConstraints c = new GridBagConstraints();
@@ -65,7 +65,7 @@ public class InfoCrawlerGUI extends JPanel implements ActionListener {
         JTextField[] textFields = {urlField, timeField, increFField, increTField};
         addLabelTextRows(labels, textFields, gridbag, textControlsPane);
 
-        c.gridwidth = GridBagConstraints.REMAINDER; //last
+        c.gridwidth = GridBagConstraints.REMAINDER;
         c.anchor = GridBagConstraints.WEST;
         c.weightx = 1.0;
         textControlsPane.add(actionLabel, c);
@@ -93,7 +93,7 @@ public class InfoCrawlerGUI extends JPanel implements ActionListener {
                                 BorderFactory.createEmptyBorder(5,5,5,5)),
                 areaScrollPane.getBorder()));
 
-        //Create an editor pane.
+        //Editor pane.
         JEditorPane editorPane = createEditorPane();
         JScrollPane editorScrollPane = new JScrollPane(editorPane);
         editorScrollPane.setVerticalScrollBarPolicy(
@@ -101,7 +101,7 @@ public class InfoCrawlerGUI extends JPanel implements ActionListener {
         editorScrollPane.setPreferredSize(new Dimension(250, 145));
         editorScrollPane.setMinimumSize(new Dimension(10, 10));
 
-        //Create a text pane.
+        //Text pane.
         JTextPane textPane = createTextPane();
         JScrollPane paneScrollPane = new JScrollPane(textPane);
         paneScrollPane.setVerticalScrollBarPolicy(
@@ -109,7 +109,7 @@ public class InfoCrawlerGUI extends JPanel implements ActionListener {
         paneScrollPane.setPreferredSize(new Dimension(250, 155));
         paneScrollPane.setMinimumSize(new Dimension(10, 10));
 
-        //Put the editor pane and the text pane in a split pane.
+        //Rright panel.
         JSplitPane splitPane = new JSplitPane(JSplitPane.VERTICAL_SPLIT,
                                               editorScrollPane,
                                               paneScrollPane);
@@ -122,7 +122,7 @@ public class InfoCrawlerGUI extends JPanel implements ActionListener {
                         BorderFactory.createEmptyBorder(5,5,5,5)));
 
 
-        //Put everything together.
+        //Put all together.
         JPanel leftPane = new JPanel(new BorderLayout());
         leftPane.add(textControlsPane, 
                      BorderLayout.PAGE_START);
@@ -142,12 +142,12 @@ public class InfoCrawlerGUI extends JPanel implements ActionListener {
         int numLabels = labels.length;
 
         for (int i = 0; i < numLabels; i++) {
-            c.gridwidth = GridBagConstraints.RELATIVE; //next-to-last
-            c.fill = GridBagConstraints.NONE;      //reset to default
-            c.weightx = 0.0;                       //reset to default
+            c.gridwidth = GridBagConstraints.RELATIVE;
+            c.fill = GridBagConstraints.NONE;
+            c.weightx = 0.0;
             container.add(labels[i], c);
 
-            c.gridwidth = GridBagConstraints.REMAINDER;     //end row
+            c.gridwidth = GridBagConstraints.REMAINDER;
             c.fill = GridBagConstraints.HORIZONTAL;
             c.weightx = 1.0;
             container.add(textFields[i], c);
@@ -194,7 +194,7 @@ public class InfoCrawlerGUI extends JPanel implements ActionListener {
                                  doc.getStyle(initStyles[i]));
             }
         } catch (BadLocationException ble) {
-            System.err.println("Couldn't insert initial text into text pane.");
+            System.err.println("Wow!");
         }
         
         return textPane;
@@ -259,26 +259,21 @@ public class InfoCrawlerGUI extends JPanel implements ActionListener {
 
     //GUI window
     private static void createAndShowGUI() {
-        //Create and set up the window.
+        //Window
         JFrame frame = new JFrame("InfoClawer");
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-
-        //Add content to the window.
         frame.add(new InfoCrawlerGUI());
 
-        //Display the window.
+        //Display the window
         frame.pack();
         frame.setVisible(true);
     }
 
     public static void main(String[] args) {
-        //Schedule a job for the event dispatching thread:
-        //creating and showing this application's GUI.
         SwingUtilities.invokeLater(new Runnable() {
             public void run() {
-                 //Turn off metal's use of bold fonts
-  UIManager.put("swing.boldMetal", Boolean.FALSE);
-  createAndShowGUI();
+                UIManager.put("swing.boldMetal", Boolean.FALSE);
+                createAndShowGUI();
             }
         });
     }
