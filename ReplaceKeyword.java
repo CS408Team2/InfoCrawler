@@ -16,16 +16,23 @@ class ReplaceKeyword {
         String[] result = new String[0];
         theReturn.result_array = result;
         theReturn.count = 0;
-        //ReplaceKeywordWithinString(theReturn, "w", " ");
+        ReplaceKeywordWithinString(theReturn, "wq", "a");
     }
     
-    public static String  ReplaceKeywordWithinString(SearchResult input, String oldKeyword, String newKeyword){
+        
+    public static void ReplaceKeywordWithinString(SearchResult input, String oldKeyword, String newKeyword){
+        // If oldkeyword not provided, return
+        if(oldKeyword == ""){
+            return;
+        }
+        
         int i;
         for(i = 0; i < input.count; i++){
-            input.result_array[i].replaceAll(oldKeyword, newKeyword);
+            String temp = input.result_array[i].replace(oldKeyword, newKeyword);
+            input.result_array[i] = temp;
         }
-        input.result_string.replaceAll(oldKeyword, newKeyword);
-        System.out.println(input.result_string);
-        return "";
+        String temp = input.result_string.replace(oldKeyword, newKeyword);
+        input.result_string = temp;
+        //System.out.println(input.result_string);
     }
 }
