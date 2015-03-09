@@ -9,14 +9,8 @@ public class Data{
     private String PASS = "password";
   
   
-    public void set(String a,String b,String c){
-        DB_URL=a;
-        USER=b;
-        PASS=c;
-    }
   
-  
-  public void start(){
+  public Connection start(){
 
    
          Connection conn = null;
@@ -30,15 +24,26 @@ public class Data{
                  se.printStackTrace();
           }catch(Exception e){
                 e.printStackTrace();
-          }finally{
-          try{
-            if(conn!=null)
-              conn.close();
-             }catch(SQLException se){
-                  se.printStackTrace();
-             }//end finally try
-          }//end try
+          }
+          
+          
+          return conn;
     }//end of Start method
+    
+    public void store(String [] res){
+        Connection conn=start();
+        System.out.println("Inserting records into the table");
+        stmt = conn.createStatement();
+        for (int i=0;i<res.length;i++){
+           
+            String sql = "INSERT INTO Results VALUES('"+res[i]+"')";
+            stmt.executeUpdate(sql);
+
+        }
+        
+                   
+        
+    }
    
    
 
