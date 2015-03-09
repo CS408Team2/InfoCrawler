@@ -1,4 +1,5 @@
 import java.util.concurrent.*;
+import java.io.*;
 public class MyThread extends Thread {
     SearchSetting set;
     int job_no = 0;
@@ -37,11 +38,12 @@ public class MyThread extends Thread {
                 set.index++;
                 k++;
             }
+            count = k;
         }
         if(set.mode == 1){
             int i;
             for(i=0;i<count;i++){
-                long threadId = Thread.currentThread().getId();
+                //long threadId = Thread.currentThread().getId();
                 System.out.println(sr[i].result_string);
             }
         }
@@ -58,6 +60,22 @@ public class MyThread extends Thread {
                 filter_set = 1;
             }else if(input_string.equals("n")){
                 filter_set = 1;
+            }else{
+                System.out.println("Yes/No? (y/n) input y or n only");
+            }
+        }
+        int i;
+        if(set.save_select == true){
+            try{
+                File file = new File(set.file_name);
+                BufferedWriter output = new BufferedWriter(new FileWriter(file));
+                for(i=0;i<count;i++){
+                    //long threadId = Thread.currentThread().getId();
+                    output.write(sr[i].result_string);
+                    output.close();
+                }
+            }catch (Exception e){
+                e.printStackTrace();
             }
         }
         

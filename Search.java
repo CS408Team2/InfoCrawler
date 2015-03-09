@@ -23,7 +23,6 @@ public class Search {
                 }else if(s.method==2){
                     //System.out.println(s.start_keyword+" "+s.end_keyword+" "+i);
                     search_result = r_search.RegularExpressionSearch(target_file,s.start_keyword,s.end_keyword);
-                
             }
         }else if(s.get_mode() == 2){
             //P

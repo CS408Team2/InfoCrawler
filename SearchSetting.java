@@ -11,6 +11,8 @@ class SearchSetting {
     public int time_interval = 0;
     public boolean notification_select = false;
     public boolean html_element_select = false;
+    public boolean save_select = false;
+    public String file_name;
     public String notification_email;
     public String job_name;
     int index;

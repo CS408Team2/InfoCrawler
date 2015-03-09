@@ -247,10 +247,33 @@ public class InfoCrawler  {
                 System.out.println("Yes/No? (y/n) input y or n only");
             }
         }
+        int save_set = 0;
+        boolean save_select = false;
+        String file_name = "";
+        if(mode == 1){
+            while(save_set==0){
+                System.out.println("Do you want to save the result into file?(y/n)");
+                input_string = input_command("Command:");
+                if(input_string.equals("y")){
+                    save_select = true;
+                    save_set = 1;
+                    System.out.println("");
+                    System.out.println("Enter your file name. Provide path if you want to store it elsewhere");
+                    file_name = input_command("Name:");
+                }else if(input_string.equals("n")){
+                    save_select = false;
+                    save_set = 1;
+                }else{
+                    System.out.println("Yes/No? (y/n) input y or n only");
+                }
+            }
+        }
         String job_name = "";
         System.out.println("\nName your job(Can be empty)");
         System.out.print("Name:");
         job_name = console.readLine();
+        set.save_select = save_select;
+        set.file_name = file_name;
         set.mode = mode;
         set.increment_to = increment_to;
         set.increment_from = increment_from;
