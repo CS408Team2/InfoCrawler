@@ -34,14 +34,19 @@ public class Data{
         Connection conn=start();
         System.out.println("Inserting records into the table");
         stmt = conn.createStatement();
-        for (int i=0;i<res.length;i++){
+        try{
+            for (int i=0;i<res.length;i++){
            
-            String sql = "INSERT INTO Results VALUES('"+res[i]+"')";
-            stmt.executeUpdate(sql);
-
+                String sql = "INSERT INTO Results VALUES('"+res[i]+"')";
+                stmt.executeUpdate(sql);
+            
+            }
         }
-        
-                   
+        catch(SQLException se){
+            se.printStackTrace;
+        } catch(Exception e){
+            e.printStackTrace();
+        }
         
     }
    
