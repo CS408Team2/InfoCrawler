@@ -12,7 +12,7 @@ public class Data{
     public void set(String a,String b,String c){
         DB_URL=a;
         USER=b;
-        Pass=c;
+        PASS=c;
     }
   
   
