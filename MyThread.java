@@ -53,11 +53,24 @@ public class MyThread extends Thread {
         InfoCrawler info = new InfoCrawler();
         int filter_set = 0;
         String input_string = "";
+        String remove_keyword;
+        String replace_keyword;
         while(filter_set==0){
             System.out.println("Do you want to use filter?(y/n)");
             input_string = info.input_command("Command:");
             if(input_string.equals("y")){
                 filter_set = 1;
+                System.out.println("Enter Remove Keyword");
+                remove_keyword = info.input_command("Keyword:");
+                System.out.println("Enter Replace Keyword(Can be empty)");
+                replace_keyword = info.input_command("Keyword:");
+                if(set.mode == 1){
+                    int i;
+                    for(i=0;i<count;i++){
+                        //long threadId = Thread.currentThread().getId();
+                        filter.ReplaceKeywordWithinString(sr[i],remove_keyword,replace_keyword);
+                    }
+                }
             }else if(input_string.equals("n")){
                 filter_set = 1;
             }else{
