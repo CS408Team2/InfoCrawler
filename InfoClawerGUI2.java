@@ -4,7 +4,7 @@ import java.awt.event.*;
 import javax.swing.*;
 import javax.swing.text.*;
 
-public class InfoClawerGUI2 extends JPanel
+public class InfoCrawlerGUI2 extends JPanel
                                           implements ActionListener,
                                                      FocusListener {
     JTextField urlField, timeField, increFField, increTField;
@@ -13,7 +13,7 @@ public class InfoClawerGUI2 extends JPanel
     JLabel addressDisplay;
     final static int GAP = 10;
 
-    public InfoClawerGUI2() {
+    public InfoCrawlerGUI2() {
         setLayout(new BoxLayout(this, BoxLayout.LINE_AXIS));
 
         JPanel leftHalf = new JPanel() {
@@ -289,7 +289,7 @@ public class InfoClawerGUI2 extends JPanel
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
 
-        JComponent newContentPane = new InfoClawerGUI2();
+        JComponent newContentPane = new InfoCrawlerGUI2();
         newContentPane.setOpaque(true); 
         frame.setContentPane(newContentPane);
 
