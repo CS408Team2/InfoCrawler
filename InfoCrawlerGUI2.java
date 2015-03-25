@@ -11,12 +11,12 @@ public class InfoCrawlerGUI2 extends JPanel
     boolean infoGet = false;
     Font regularFont, italicFont;
     JLabel infoDisplay;
-    final static int GAP = 10;
+    final static int GAP = 6;
 
     public InfoCrawlerGUI2() {
         setLayout(new BoxLayout(this, BoxLayout.LINE_AXIS));
 
-        JPanel leftHalf = new JPanel() {
+        JPanel leftHalfUp = new JPanel() {
 
             public Dimension getMaximumSize() {
                 Dimension pref = getPreferredSize();
@@ -24,13 +24,35 @@ public class InfoCrawlerGUI2 extends JPanel
                                      pref.height);
             }
         };
-        leftHalf.setLayout(new BoxLayout(leftHalf,
+        leftHalfUp.setAlignmentX(LEFT_ALIGNMENT);
+        leftHalfUp.setLayout(new BoxLayout(leftHalfUp,
                                          BoxLayout.PAGE_AXIS));
-        leftHalf.add(createMode());
-        leftHalf.add(createEntryFields());
-        leftHalf.add(createButtons());
+        leftHalfUp.add(createMode());
+        leftHalfUp.add(createEntryFields());
+        leftHalfUp.add(createButtons());
 
-        add(leftHalf);
+        JPanel leftHalfDown = new JPanel() {
+
+            public Dimension getMaximumSize() {
+                Dimension pref = getPreferredSize();
+                return new Dimension(Integer.MAX_VALUE,
+                                     pref.height);
+            }
+        };
+        leftHalfDown.setAlignmentX(LEFT_ALIGNMENT);
+        leftHalfDown.setLayout(new BoxLayout(leftHalfDown,
+                                         BoxLayout.PAGE_AXIS));
+        
+        leftHalfDown.add(createEntryFields2());
+        leftHalfDown.add(createButtonsDown());
+        
+        JSplitPane pane = new JSplitPane( JSplitPane.VERTICAL_SPLIT, 
+                                  leftHalfUp, leftHalfDown );
+        pane.setEnabled(true);
+        
+        //add(leftHalfUp);
+        //add(leftHalfDown);
+        add(pane);
         add(createInfoDisplay());
         
         
@@ -77,6 +99,18 @@ public class InfoCrawlerGUI2 extends JPanel
                                                 GAP-5, GAP-5));
         return panel;
     }
+    
+    protected JComponent createButtonsDown() {
+        JPanel panel = new JPanel(new FlowLayout(FlowLayout.TRAILING));
+
+        JButton button = new JButton("Remove");
+        button.addActionListener(this);
+        panel.add(button);
+
+        panel.setBorder(BorderFactory.createEmptyBorder(0, 0,
+                                                GAP-5, GAP-5));
+        return panel;
+    }
 
     public void actionPerformed(ActionEvent e) {
         if ("clear".equals(e.getActionCommand())) {
@@ -113,14 +147,6 @@ public class InfoCrawlerGUI2 extends JPanel
         italicFont = regularFont.deriveFont(Font.ITALIC);
         updateDisplays();
 
-        //Lay out the panel.
-        panel.setBorder(BorderFactory.createEmptyBorder(
-                                GAP/2,
-                                0,    
-                                GAP/2, 
-                                0));  
-        panel.add(new JSeparator(JSeparator.VERTICAL),
-                  BorderLayout.LINE_START);
         panel.add(infoDisplay,
                   BorderLayout.CENTER);
         panel.setPreferredSize(new Dimension(200, 150));
@@ -140,26 +166,26 @@ public class InfoCrawlerGUI2 extends JPanel
         String empty = "";
 
         if ((url == null) || empty.equals(url)) {
-            url = "<em>(no url specified)</em>";
+            url = "";
         }
         if ((time == null) || empty.equals(time)) {
-            time = "<em>(no time specified)</em>";
+            time = "";
         }
         if ((incref == null) || empty.equals(incref)) {
-            incref = "<em>(no incref specified)</em>";
+            incref = "";
         }
         if ((incret == null) || empty.equals(incret)) {
-            incret = "<em>(no incret specified)</em>";
+            incret = "";
         }
         if ((key1 == null) || empty.equals(incret)) {
-            incret = "<em>(no incret specified)</em>";
+            key1 = "";
         }
         if ((key2 == null) || empty.equals(incret)) {
-            incret = "<em>(no incret specified)</em>";
+            key2 = "";
         }
         
         StringBuffer sb = new StringBuffer();
-        sb.append("<html><p align=center>");
+        sb.append("<html><p align=left>");
         sb.append(url);
         sb.append("<p>");
         sb.append(time);
@@ -218,8 +244,6 @@ public class InfoCrawlerGUI2 extends JPanel
           "Time interval: ",
           "Increment range (from): ",
           "Increment range (to): ",
-          "Keyword (1st)",
-          "Keyword (2nd)"
         };
 
          //Create a text area.
@@ -262,13 +286,7 @@ public class InfoCrawlerGUI2 extends JPanel
         increTField.setColumns(20);
         fields[fieldNum++] = increTField;
         
-        key1Field = new JTextField();
-        key1Field.setColumns(20);
-        fields[fieldNum++] = key1Field;
 
-        key2Field = new JTextField();
-        key2Field.setColumns(20);
-        fields[fieldNum++] = key2Field;
 
         for (int i = 0; i < labelStrings.length; i++) {
             labels[i] = new JLabel(labelStrings[i],
@@ -291,6 +309,57 @@ public class InfoCrawlerGUI2 extends JPanel
                                         labelStrings.length, 2,
                                         GAP, GAP, 
                                         GAP, GAP);
+        return panel;
+    }
+    
+    protected JComponent createEntryFields2() {
+        JPanel panel = new JPanel(new SpringLayout());
+        
+        String[] labelStrings = {
+          "Keyword:",
+          "Keyword:"
+        };
+
+        JLabel[] labels = new JLabel[labelStrings.length];
+        JComponent[] fields = new JComponent[labelStrings.length];
+        int fieldNum = 0;
+
+        key1Field = new JTextField();
+        key1Field.setColumns(20);
+        fields[fieldNum++] = key1Field;
+
+        key2Field = new JTextField();
+        key2Field.setColumns(20);
+        fields[fieldNum++] = key2Field;
+
+        for (int i = 0; i < labelStrings.length; i++) {
+            labels[i] = new JLabel(labelStrings[i],
+                                   JLabel.TRAILING);
+            labels[i].setLabelFor(fields[i]);
+            panel.add(labels[i]);
+            panel.add(fields[i]);
+
+            JTextField tf = null;
+            if (fields[i] instanceof JSpinner) {
+                tf = getTextField((JSpinner)fields[i]);
+            } else {
+                tf = (JTextField)fields[i];
+            }
+            tf.addActionListener(this);
+            tf.addFocusListener(this);
+        }
+        panel.setBorder(BorderFactory.createEmptyBorder(
+                                GAP/2,
+                                0,    
+                                GAP/2, 
+                                0));  
+        panel.add(new JSeparator(JSeparator.VERTICAL),
+                  BorderLayout.LINE_START);
+        SpringUtilities.makeCompactGrid(panel,
+                                        labelStrings.length, 2,
+                                        GAP, GAP, 
+                                        GAP, GAP);
+        
         return panel;
     }
    
