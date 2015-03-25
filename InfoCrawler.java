@@ -4,6 +4,8 @@ import java.lang.*;
 import java.awt.event.KeyEvent;
 
 public class InfoCrawler  {
+    public static boolean mode_flag = false;
+    public static int public_mode = 0;
     public static int input_concurrency(){
         int return_result = 0;
         Console console = System.console();
@@ -115,7 +117,8 @@ public class InfoCrawler  {
         int mode = 0;
         int method = 0;
         HTMLElement h = new HTMLElement();
-        while (mode==0){
+        mode = public_mode;
+        while (mode==0&&mode_flag==false){
             mode = mode_selection();
         }
         if(mode==1){
@@ -293,26 +296,60 @@ public class InfoCrawler  {
         }
         return set;
     }
-    public static void main(String[] args) {
-        
-        System.out.println("=====Welcome to InfoCrawler=====\n-h For help\n-q Exit");
-        
-
-        SearchSetting[] set =  new SearchSetting[4];
-        set[0] = setup();
-        int concurrency = 0;
-        concurrency = input_concurrency();
+    public static SearchSetting setup_argv(String[] args){
+        SearchSetting set = new SearchSetting();
+        boolean mode_set = false;
         int i;
-        for(i=0;i<concurrency;i++){
-            System.out.print("\n======Job No.");
-            System.out.print(i+2);
-            System.out.print(" Set up======");
-            set[i+1] = setup();
+        for(i=0;i<args.length;i++){
+            if(args[i].equals("-r")){
+                set.mode = 1;
+                mode_set = true;
+            }else if(args[i].equals("-p")){
+                set.mode = 2;
+                mode_set = true;
+            }else if(args[i].equals("-url")){
+                i++;
+                set.BaseURL = args[i];
+            }else if(args[i].equals("-range")){
+                i++;
+                set.increment_from = args[i];
+                i++;
+                set.increment_to = args[i];
+            }else if(args[i].equals("-interval")){
+                i++;
+                set.time_interval = args[i];
+            }else if(args[i].equals("-keyword")){
+                i++;
+                set.start_keyword = args[i];
+                i++;
+                set.end_keyword = args[i];
+            }
         }
-        MyThread[] myThread = new MyThread[4];
-        for(i=0;i<concurrency+1;i++){
-            myThread[i] = new MyThread(set[i],i);
-            myThread[i].start();
+        return set;
+    }
+    public static void main(String[] args) {
+        SearchSetting[] set =  new SearchSetting[4];
+        if(args.length==0){
+            System.out.println("=====Welcome to InfoCrawler=====\n-h For help\n-q Exit");
+            set[0] = setup();
+            int concurrency = 0;
+            concurrency = input_concurrency();
+            public_mode = set[0].mode;
+            int i;
+            for(i=0;i<concurrency;i++){
+                mode_flag=true;
+                System.out.print("\n======Job No.");
+                System.out.print(i+2);
+                System.out.print(" Set up======");
+                set[i+1] = setup();
+            }
+            MyThread[] myThread = new MyThread[4];
+            for(i=0;i<concurrency+1;i++){
+                myThread[i] = new MyThread(set[i],i);
+                myThread[i].start();
+            }
+        }else{
+            set[0] = setup_argv(args);
         }
     }
 }

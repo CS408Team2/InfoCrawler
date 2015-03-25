@@ -51,7 +51,7 @@ InfoCrawler.class: InfoCrawler.java
 	$(JCC) InfoCrawler.java
 
 GUI.class: GUI.java
-	$(JCC) GUI.java
+	$(JCC) InfoCrawlerGUI2.java
 
 clean: 
 	$(RM) *.class
@@ -62,4 +62,6 @@ test:
 run:
 	java InfoCrawler
 
+runGUI:
+	java InfoCrawlerGUI2
 
