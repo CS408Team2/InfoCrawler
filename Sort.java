@@ -38,9 +38,6 @@ class Sort {
      method = 4 : sort by content length
      method = 5 : sort by substring
      method = 6 : eliminate content that only has number
-     method = 7 : eliminate content that contain number
-     method = 8 : eliminate content that only has character
-     method = 9 : eliminate content that contain character
      
      sub is any integer if method 5 is not used or substring number if method 5 is used
      If an invalid sub number is provide, sort will fail
@@ -143,14 +140,6 @@ class Sort {
                 }
             }
             input.result_string = temp;
-        }
-        else if(method == 7){
-            int i;
-            for(i = 0; i < input.count; i++){
-                if(!containInteger(input.result_array[i])){
-                    System.out.println("1");
-                }
-            }
         }
         
     }
