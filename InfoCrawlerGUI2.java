@@ -7,10 +7,10 @@ import javax.swing.text.*;
 public class InfoCrawlerGUI2 extends JPanel
                                           implements ActionListener,
                                                      FocusListener {
-    JTextField urlField, timeField, increFField, increTField;
-    boolean addressSet = false;
+    JTextField urlField, timeField, increFField, increTField, key1Field, key2Field;
+    boolean infoGet = false;
     Font regularFont, italicFont;
-    JLabel addressDisplay;
+    JLabel infoDisplay;
     final static int GAP = 10;
 
     public InfoCrawlerGUI2() {
@@ -31,7 +31,7 @@ public class InfoCrawlerGUI2 extends JPanel
         leftHalf.add(createButtons());
 
         add(leftHalf);
-        add(createAddressDisplay());
+        add(createInfoDisplay());
         
         
     }
@@ -80,31 +80,35 @@ public class InfoCrawlerGUI2 extends JPanel
 
     public void actionPerformed(ActionEvent e) {
         if ("clear".equals(e.getActionCommand())) {
-            addressSet = false;
+          
+            infoGet = false;
             urlField.setText("");
             timeField.setText("");
             increFField.setText("");
             increTField.setText("");
+            key1Field.setText("");
+            key2Field.setText("");
+            
         } else {
-            addressSet = true;
+            infoGet = true;
         }
         updateDisplays();
     }
 
     protected void updateDisplays() {
-        addressDisplay.setText(formatInfo());
-        if (addressSet) {
-            addressDisplay.setFont(regularFont);
+        infoDisplay.setText(formatInfo());
+        if (infoGet) {
+            infoDisplay.setFont(regularFont);
         } else {
-            addressDisplay.setFont(regularFont);
+            infoDisplay.setFont(regularFont);
         }
     }
 
-    protected JComponent createAddressDisplay() {
+    protected JComponent createInfoDisplay() {
         JPanel panel = new JPanel(new BorderLayout());
-        addressDisplay = new JLabel();
-        addressDisplay.setHorizontalAlignment(JLabel.CENTER);
-        regularFont = addressDisplay.getFont().deriveFont(Font.PLAIN,
+        infoDisplay = new JLabel();
+        infoDisplay.setHorizontalAlignment(JLabel.CENTER);
+        regularFont = infoDisplay.getFont().deriveFont(Font.PLAIN,
                                                             16.0f);
         italicFont = regularFont.deriveFont(Font.ITALIC);
         updateDisplays();
@@ -117,7 +121,7 @@ public class InfoCrawlerGUI2 extends JPanel
                                 0));  
         panel.add(new JSeparator(JSeparator.VERTICAL),
                   BorderLayout.LINE_START);
-        panel.add(addressDisplay,
+        panel.add(infoDisplay,
                   BorderLayout.CENTER);
         panel.setPreferredSize(new Dimension(200, 150));
 
@@ -125,12 +129,14 @@ public class InfoCrawlerGUI2 extends JPanel
     }
 
     protected String formatInfo() {
-        if (!addressSet) return "No result here.";
+        if (!infoGet) return "No result here.";
 
         String url = urlField.getText();
         String time = timeField.getText();
         String incref = increFField.getText();
         String incret = increTField.getText();
+        String key1 = key1Field.getText();
+        String key2 = key2Field.getText();
         String empty = "";
 
         if ((url == null) || empty.equals(url)) {
@@ -145,6 +151,12 @@ public class InfoCrawlerGUI2 extends JPanel
         if ((incret == null) || empty.equals(incret)) {
             incret = "<em>(no incret specified)</em>";
         }
+        if ((key1 == null) || empty.equals(incret)) {
+            incret = "<em>(no incret specified)</em>";
+        }
+        if ((key2 == null) || empty.equals(incret)) {
+            incret = "<em>(no incret specified)</em>";
+        }
         
         StringBuffer sb = new StringBuffer();
         sb.append("<html><p align=center>");
@@ -152,9 +164,13 @@ public class InfoCrawlerGUI2 extends JPanel
         sb.append("<p>");
         sb.append(time);
         sb.append("<p>");
-        sb.append(incref); //should format
+        sb.append(incref);
         sb.append("<p>");
         sb.append(incret);
+        sb.append("<p>");
+        sb.append(key1);
+        sb.append("<p>");
+        sb.append(key2);
         sb.append("</p></html>");
 
         return sb.toString();
@@ -198,10 +214,12 @@ public class InfoCrawlerGUI2 extends JPanel
         JPanel panel = new JPanel(new SpringLayout());
         
         String[] labelStrings = {
-            "URL: ",
-            "Time interval: ",
-            "Increment range (from): ",
-            "Increment range (to): "
+          "URL: ",
+          "Time interval: ",
+          "Increment range (from): ",
+          "Increment range (to): ",
+          "Keyword (1st)",
+          "Keyword (2nd)"
         };
 
          //Create a text area.
@@ -243,7 +261,14 @@ public class InfoCrawlerGUI2 extends JPanel
         increTField = new JTextField();
         increTField.setColumns(20);
         fields[fieldNum++] = increTField;
+        
+        key1Field = new JTextField();
+        key1Field.setColumns(20);
+        fields[fieldNum++] = key1Field;
 
+        key2Field = new JTextField();
+        key2Field.setColumns(20);
+        fields[fieldNum++] = key2Field;
 
         for (int i = 0; i < labelStrings.length; i++) {
             labels[i] = new JLabel(labelStrings[i],
