@@ -76,8 +76,8 @@ public class InfoCrawlerGUI2 extends JPanel
         
         panel.add(new JLabel("Select Method:"));
         DefaultComboBoxModel method = new DefaultComboBoxModel();
-        method.addElement("Word By Word");
         method.addElement("Regular Expression");
+        method.addElement("Word By Word");
         //comboBox1.getSelectedItem() is what you selected here
         comboBox1 = new JComboBox(method);
         panel.add(comboBox1);
@@ -241,19 +241,23 @@ public class InfoCrawlerGUI2 extends JPanel
     }
 
     protected JComponent createInfoDisplay() {
-        JPanel panel = new JPanel(new BorderLayout());
-        infoDisplay = new JLabel();
-        infoDisplay.setHorizontalAlignment(JLabel.CENTER);
-        regularFont = infoDisplay.getFont().deriveFont(Font.PLAIN,
-                                                            16.0f);
-        italicFont = regularFont.deriveFont(Font.ITALIC);
-        updateDisplays();
-
-        panel.add(infoDisplay,
-                  BorderLayout.CENTER);
-        panel.setPreferredSize(new Dimension(200, 150));
-
-        return panel;
+      JScrollPane scrollpane;
+      //JPanel panel = new JPanel(new BorderLayout());
+      infoDisplay = new JLabel();
+      infoDisplay.setHorizontalAlignment(JLabel.CENTER);
+      regularFont = infoDisplay.getFont().deriveFont(Font.PLAIN,
+                                                     16.0f);
+      italicFont = regularFont.deriveFont(Font.ITALIC);
+      updateDisplays();
+      
+      //panel.add(infoDisplay,
+      //          BorderLayout.CENTER);
+      //panel.setPreferredSize(new Dimension(200, 150));
+      scrollpane = new JScrollPane(infoDisplay,
+        JScrollPane.VERTICAL_SCROLLBAR_ALWAYS, 
+        JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
+      scrollpane.setPreferredSize(new Dimension(300,100));
+      return scrollpane;
     }
 
     protected String formatInfo() {
