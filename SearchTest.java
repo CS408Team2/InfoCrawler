@@ -32,7 +32,7 @@ public class SearchTest{
     public static void main(String[] args) {
         
         //BoilerLink Test Case
-        String match_key = "&quot;A Cause for Paws&quot; (ACP)\n21st Century Scholars (Scholar Corps for 21st Century Scholars)\n3D Printing Club (3DPC)\nA Cultural Connection promoting Leadership opportunities and Academic achievement for International and Multicultural students (ACCLAIM)\nA Global Friendship Campus Club Purdue University (AGF Campus Club)\nAAE Graduate Women’s Gathering (AAE GWG)\nAcacia\nAcademy of Student Pharmacists (APhA-ASP)\nAccounting Association (PAA)\nACM SIGGRAPH\nView Recommended Organizations\nManage Your Interests";
+        String match_key = "&quot;A Cause for Paws&quot; (ACP)\nA Cultural Connection promoting Leadership opportunities and Academic achievement for International and Multicultural students (ACCLAIM)\nAAE Graduate Women’s Gathering (AAE GWG)\nAcacia\nAcademy of Student Pharmacists (APhA-ASP)\nAccounting Association (PAA)\nACM SIGGRAPH\nAcoustical Society of America, Purdue Chapter (ASA)\nActive Minds at Purdue University\nActuarial Club (PAC)\nView Recommended Organizations\nManage Your Interests";
         testcase.BaseURL = "https://boilerlink.purdue.edu/Organizations?SearchType=None&SelectedCategoryId=0&CurrentPage=XXX";
         testcase.start_keyword = "target=\"_self\">";
         testcase.end_keyword = "</a>";
@@ -48,6 +48,7 @@ public class SearchTest{
         //BoilerLink
         testing(testcase,1,"Boilerlink -r WordByWordSearch",match_key);
         //System.out.println(search_result.result_string);
+        //System.out.println(match_key);
 
         
         // Test Case 2 Two Empty String
@@ -145,8 +146,12 @@ public class SearchTest{
         }
         System.out.println("");
         System.out.println("=====Failed Test Case=====");
-        for(i=0;i<count_fail;i++){
-            System.out.println(fail[i]);
+        if(count_fail==0){
+            System.out.println("None");
+        }else{
+            for(i=0;i<count_fail;i++){
+                System.out.println(fail[i]);
+            }
         }
     }
 }

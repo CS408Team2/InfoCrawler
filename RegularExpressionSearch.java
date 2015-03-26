@@ -24,7 +24,7 @@ class RegularExpressionSearch {
     
     public SearchResult RegularExpressionSearch(String input, String key1, String key2){
         long start = System.nanoTime();
-        
+
         // Get how many times key1 and key2 does input string contain
         
         String regexKey1 = key1;
@@ -129,7 +129,6 @@ class RegularExpressionSearch {
         theResult.result_array = result;
         theResult.result_string = temp;
         theResult.time_used = elapsedTime;
-        
         return theResult;
     }
     

@@ -13,7 +13,7 @@ public class MyThread extends Thread {
         //System.out.println(set.increment_times);
         int count = 0;
         if(set.increment_times!=0){
-            count = set.increment_times;
+            count = set.increment_times+1;
         }else{
             count = 1;
         }
@@ -33,7 +33,7 @@ public class MyThread extends Thread {
         else if(set.mode == 1){
             int i;
             int k = 0;
-            for(i=set.increment_from;i<set.increment_to;i++){
+            for(i=set.increment_from;i<set.increment_to+1;i++){
                 sr[k] = s.search(set);
                 set.index++;
                 k++;

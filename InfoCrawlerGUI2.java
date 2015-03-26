@@ -3,16 +3,24 @@ import java.awt.*;
 import java.awt.event.*;
 import javax.swing.*;
 import javax.swing.text.*;
+import java.util.Arrays;
+import java.util.concurrent.*;
+import java.io.*;
 
 public class InfoCrawlerGUI2 extends JPanel
                                           implements ActionListener,
                                                      FocusListener {
-    JTextField urlField, timeField, increFField, increTField, key1Field, key2Field;
+    JTextField urlField, timeField, increFField, increTField, key1Field, key2Field, key3Field,key4Field,emailField;
+                                                         JComboBox comboBox2, comboBox3, comboBox1;
     boolean infoGet = false;
     Font regularFont, italicFont;
     JLabel infoDisplay;
+    int flag = 0;
     final static int GAP = 6;
-
+    public static SearchSetting set = new SearchSetting();
+    public static SearchResult result = new SearchResult();
+    public static Search s = new Search();
+    public static String repeat_mode_string = "";
     public InfoCrawlerGUI2() {
         setLayout(new BoxLayout(this, BoxLayout.LINE_AXIS));
 
@@ -54,18 +62,24 @@ public class InfoCrawlerGUI2 extends JPanel
         //add(leftHalfDown);
         add(pane);
         add(createInfoDisplay());
-        
-        
     }
 
     protected JComponent createMode() {
         JPanel panel = new JPanel(new FlowLayout(FlowLayout.TRAILING));
-        panel.add(new JLabel("Select mode:"));
+        
+        panel.add(new JLabel("Select Mode:"));
         DefaultComboBoxModel mode = new DefaultComboBoxModel();
         mode.addElement("Repeat");
         mode.addElement("Periodic");
+        comboBox3 = new JComboBox(mode);
+        panel.add(comboBox3);
+        
+        panel.add(new JLabel("Select Method:"));
+        DefaultComboBoxModel method = new DefaultComboBoxModel();
+        method.addElement("Word By Word");
+        method.addElement("Regular Expression");
         //comboBox1.getSelectedItem() is what you selected here
-        JComboBox comboBox1 = new JComboBox(mode);
+        comboBox1 = new JComboBox(method);
         panel.add(comboBox1);
         
         panel.add(new JLabel("Notification:"));
@@ -73,13 +87,14 @@ public class InfoCrawlerGUI2 extends JPanel
         notify.addElement("Yes");
         notify.addElement("No");
         //comboBox2.getSelectedItem() is what you selected
-        JComboBox comboBox2 = new JComboBox(notify);
+        comboBox2 = new JComboBox(notify);
         panel.add(comboBox2);
         
         
         
         panel.setBorder(BorderFactory.createEmptyBorder(0, 0,
                                                 GAP-5, GAP-5));
+        
         return panel;
     }
     
@@ -114,7 +129,6 @@ public class InfoCrawlerGUI2 extends JPanel
 
     public void actionPerformed(ActionEvent e) {
         if ("clear".equals(e.getActionCommand())) {
-          
             infoGet = false;
             urlField.setText("");
             timeField.setText("");
@@ -122,12 +136,97 @@ public class InfoCrawlerGUI2 extends JPanel
             increTField.setText("");
             key1Field.setText("");
             key2Field.setText("");
+            emailField.setText("");
+            flag = 1;
             
-        } else {
+        }else if("Remove".equals(e.getActionCommand())){
+            System.out.println("here");
+            
+        }
+        else {
+            String url = urlField.getText();
+            String time = timeField.getText();
+            String incref = increFField.getText();
+            String incret = increTField.getText();
+            String key1 = key1Field.getText();
+            String key2 = key2Field.getText();
+            String email = emailField.getText();
+            if(url.equals("")==false){
+                set.BaseURL = url;
+            }
+            if(time.equals("")==false){
+                set.time_interval = Integer.parseInt(time);
+            }
+            if(incref.equals("")==false){
+                set.increment_from = Integer.parseInt(incref);
+            }
+            if(incret.equals("")==false){
+                set.increment_to = Integer.parseInt(incret);
+            }
+            if(key1.equals("")==false){
+                set.start_keyword = key1;
+            }
+            if(key2.equals("")==false){
+                set.end_keyword = key2;
+            }
+            if(email.equals("")==false){
+                set.notification_email = email;
+            }
+            if(comboBox1.getSelectedItem().equals("Word By Word")){
+                set.method = 1;
+            }else if(comboBox1.getSelectedItem().equals("Regular Expression")){
+                set.method = 2;
+            }
+            if(comboBox2.getSelectedItem().equals("Yes")){
+                set.notification_select = true;
+            }else{
+                set.notification_select = false;
+            }
+            if(comboBox3.getSelectedItem().equals("Repeat")){
+                set.mode = 1;
+            }else{
+                set.mode = 2;
+            }
+            //System.out.println(key1);
+            int count = set.increment_to - set.increment_from+1;
+            if(set.mode == 1){
+                int i;
+                for(i=set.increment_from;i<set.increment_to+1;i++){
+                    set.index = i;
+                    result = s.search(set);
+                    System.out.println(i+" "+result.count);
+                    int k=0;
+                    for(k=0;k<result.count;k++){
+                        if(repeat_mode_string.equals("")){
+                            repeat_mode_string = result.result_array[k]+"<p>";
+                        }else{
+                            repeat_mode_string = repeat_mode_string + result.result_array[k]+"<p>";
+                        }
+                    }
+                }
+            }else if(set.mode == 2 ){
+                flag = 0;
+                periodic_search(set);
+            }
+            //System.out.println(result.result_string);
             infoGet = true;
         }
         updateDisplays();
     }
+    
+    protected void periodic_search(SearchSetting set){
+        result = s.search(set);
+        System.out.println("here");
+        updateDisplays();
+        try {
+            Thread.sleep(set.time_interval*1000);
+            //1000 milliseconds is one second.
+        } catch(InterruptedException ex) {
+            Thread.currentThread().interrupt();
+        }
+        
+    }
+    
 
     protected void updateDisplays() {
         infoDisplay.setText(formatInfo());
@@ -135,6 +234,9 @@ public class InfoCrawlerGUI2 extends JPanel
             infoDisplay.setFont(regularFont);
         } else {
             infoDisplay.setFont(regularFont);
+        }
+        if(set.mode == 2 && flag ==0){
+            periodic_search(set);
         }
     }
 
@@ -163,6 +265,7 @@ public class InfoCrawlerGUI2 extends JPanel
         String incret = increTField.getText();
         String key1 = key1Field.getText();
         String key2 = key2Field.getText();
+        String email = emailField.getText();
         String empty = "";
 
         if ((url == null) || empty.equals(url)) {
@@ -183,9 +286,28 @@ public class InfoCrawlerGUI2 extends JPanel
         if ((key2 == null) || empty.equals(incret)) {
             key2 = "";
         }
+        if ((email == null) || empty.equals(incret)) {
+            email = "";
+        }
         
         StringBuffer sb = new StringBuffer();
+        int i;
+        int k;
+        //System.out.println("here");
+        //System.out.println(result.result_string);
         sb.append("<html><p align=left>");
+        if(set.mode == 2){
+            for(i=0;i<result.count;i++){
+                //System.out.println(result.result_array[i]);
+                sb.append(result.result_array[i]);
+                sb.append("<p>");
+            }
+        }else if(set.mode == 1 ){
+            //System.out.println("here");
+            sb.append(repeat_mode_string);
+        }
+        sb.append("</p></html>");
+        /*sb.append("<html><p align=left>");
         sb.append(url);
         sb.append("<p>");
         sb.append(time);
@@ -197,8 +319,7 @@ public class InfoCrawlerGUI2 extends JPanel
         sb.append(key1);
         sb.append("<p>");
         sb.append(key2);
-        sb.append("</p></html>");
-
+        sb.append("</p></html>");*/
         return sb.toString();
     }
 
@@ -244,6 +365,9 @@ public class InfoCrawlerGUI2 extends JPanel
           "Time interval: ",
           "Increment range (from): ",
           "Increment range (to): ",
+          "Start Keyword:",
+          "End Keyword:",
+            "Email:"
         };
 
          //Create a text area.
@@ -286,6 +410,19 @@ public class InfoCrawlerGUI2 extends JPanel
         increTField.setColumns(20);
         fields[fieldNum++] = increTField;
         
+        
+        key1Field = new JTextField();
+        key1Field.setColumns(20);
+        fields[fieldNum++] = key1Field;
+        
+        key2Field = new JTextField();
+        key2Field.setColumns(20);
+        fields[fieldNum++] = key2Field;
+        
+        emailField = new JTextField();
+        emailField.setColumns(20);
+        fields[fieldNum++] = emailField;
+        
 
 
         for (int i = 0; i < labelStrings.length; i++) {
@@ -316,21 +453,21 @@ public class InfoCrawlerGUI2 extends JPanel
         JPanel panel = new JPanel(new SpringLayout());
         
         String[] labelStrings = {
-          "Keyword:",
-          "Keyword:"
+          "Remove Keyword:",
+          "Replace Keyword:"
         };
 
         JLabel[] labels = new JLabel[labelStrings.length];
         JComponent[] fields = new JComponent[labelStrings.length];
         int fieldNum = 0;
 
-        key1Field = new JTextField();
-        key1Field.setColumns(20);
-        fields[fieldNum++] = key1Field;
+        key3Field = new JTextField();
+        key3Field.setColumns(20);
+        fields[fieldNum++] = key3Field;
 
-        key2Field = new JTextField();
-        key2Field.setColumns(20);
-        fields[fieldNum++] = key2Field;
+        key4Field = new JTextField();
+        key4Field.setColumns(20);
+        fields[fieldNum++] = key4Field;
 
         for (int i = 0; i < labelStrings.length; i++) {
             labels[i] = new JLabel(labelStrings[i],

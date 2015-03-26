@@ -299,6 +299,10 @@ public class InfoCrawler  {
     public static SearchSetting setup_argv(String[] args){
         SearchSetting set = new SearchSetting();
         boolean mode_set = false;
+        boolean url_set = false;
+        boolean range_set = false;
+        boolean interval_set = false;
+        boolean keyword_set = false;
         int i;
         for(i=0;i<args.length;i++){
             if(args[i].equals("-r")){
@@ -310,20 +314,30 @@ public class InfoCrawler  {
             }else if(args[i].equals("-url")){
                 i++;
                 set.BaseURL = args[i];
+                url_set = true;
             }else if(args[i].equals("-range")){
+                range_set = true;
                 i++;
-                set.increment_from = args[i];
+                set.increment_from = Integer.parseInt(args[i]);
                 i++;
-                set.increment_to = args[i];
+                set.increment_to = Integer.parseInt(args[i]);
             }else if(args[i].equals("-interval")){
+                interval_set = true;
                 i++;
-                set.time_interval = args[i];
+                set.time_interval = Integer.parseInt(args[i]);
             }else if(args[i].equals("-keyword")){
+                keyword_set = true;
                 i++;
                 set.start_keyword = args[i];
                 i++;
                 set.end_keyword = args[i];
             }
+        }
+        if(mode_set==false){
+            set.mode = mode_selection();
+        }
+        if(url_set==false){
+            set.BaseURL = input_command("URL:");
         }
         return set;
     }

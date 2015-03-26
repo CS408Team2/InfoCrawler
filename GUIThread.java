@@ -1,0 +1,8 @@
+import java.util.concurrent.*;
+import java.io.*;
+
+public class GUIThread extends Thread {
+    public void run() {
+        
+    }
+}

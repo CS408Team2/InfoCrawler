@@ -3,7 +3,10 @@ public class Search {
         int i = 0;
         String target_url;
         String target_file="";
-        //System.out.println(s.start_keyword+s.end_keyword);
+        //System.out.println(s.BaseURL);
+        //System.out.println(s.start_keyword);
+        //System.out.println(s.end_keyword);
+        //System.out.println(s.mode);
         String[] result = new String[10000];
         GetURLContent in = new GetURLContent();
         Searchbywords search = new Searchbywords();
@@ -15,6 +18,7 @@ public class Search {
                 target_url = replace_url_incremnet(i,s.BaseURL);
                 try{
                     target_file = in.open_url_file(target_url);
+                    //System.out.println(target_file);
                 }catch( Exception e){
                     e.printStackTrace();
                 }
@@ -40,6 +44,7 @@ public class Search {
         }else{
             System.out.println("Mode Bug");
         }
+        //System.out.println(search_result.result_string);
         return search_result;
     }
     public String replace_url_incremnet(int r,String url){
