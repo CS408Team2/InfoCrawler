@@ -35,4 +35,7 @@ class ReplaceKeyword {
         input.result_string = temp;
         //System.out.println(input.result_string);
     }
+    public static void ReplaceKeywordWithinStringGUI(String input, String oldKeyword, String newKeyword){
+        
+    }
 }

@@ -21,6 +21,9 @@ public class InfoCrawlerGUI2 extends JPanel
     public static SearchResult result = new SearchResult();
     public static Search s = new Search();
     public static String repeat_mode_string = "";
+    int remove_flag;
+    String remove_string = "";
+    String replace_string = "";
     public InfoCrawlerGUI2() {
         setLayout(new BoxLayout(this, BoxLayout.LINE_AXIS));
 
@@ -51,8 +54,8 @@ public class InfoCrawlerGUI2 extends JPanel
         leftHalfDown.setLayout(new BoxLayout(leftHalfDown,
                                          BoxLayout.PAGE_AXIS));
         
-        leftHalfDown.add(createEntryFields2());
-        leftHalfDown.add(createButtonsDown());
+        //leftHalfDown.add(createEntryFields2());
+        //leftHalfDown.add(createButtonsDown());
         
         JSplitPane pane = new JSplitPane( JSplitPane.VERTICAL_SPLIT, 
                                   leftHalfUp, leftHalfDown );
@@ -117,13 +120,6 @@ public class InfoCrawlerGUI2 extends JPanel
     
     protected JComponent createButtonsDown() {
         JPanel panel = new JPanel(new FlowLayout(FlowLayout.TRAILING));
-
-        JButton button = new JButton("Remove");
-        button.addActionListener(this);
-        panel.add(button);
-
-        panel.setBorder(BorderFactory.createEmptyBorder(0, 0,
-                                                GAP-5, GAP-5));
         return panel;
     }
 
@@ -138,18 +134,17 @@ public class InfoCrawlerGUI2 extends JPanel
             key2Field.setText("");
             emailField.setText("");
             flag = 1;
-            
-        }else if("Remove".equals(e.getActionCommand())){
-            System.out.println("here");
-            
-        }
-        else {
+        }else {
             String url = urlField.getText();
             String time = timeField.getText();
             String incref = increFField.getText();
             String incret = increTField.getText();
             String key1 = key1Field.getText();
             String key2 = key2Field.getText();
+            String key3 = key3Field.getText();
+            String key4 = key4Field.getText();
+            remove_string = key3;
+            replace_string = key4;
             String email = emailField.getText();
             if(url.equals("")==false){
                 set.BaseURL = url;
@@ -198,9 +193,17 @@ public class InfoCrawlerGUI2 extends JPanel
                     int k=0;
                     for(k=0;k<result.count;k++){
                         if(repeat_mode_string.equals("")){
-                            repeat_mode_string = result.result_array[k]+"<p>";
+                            if(result.result_array[k].equals(remove_string)){
+                                repeat_mode_string = replace_string+"<p>";
+                            }else{
+                                repeat_mode_string = result.result_array[k]+"<p>";
+                            }
                         }else{
-                            repeat_mode_string = repeat_mode_string + result.result_array[k]+"<p>";
+                            if(result.result_array[k].equals(remove_string)){
+                                repeat_mode_string = repeat_mode_string + replace_string+"<p>";
+                            }else{
+                                repeat_mode_string = repeat_mode_string + result.result_array[k]+"<p>";
+                            }
                         }
                     }
                 }
@@ -371,7 +374,9 @@ public class InfoCrawlerGUI2 extends JPanel
           "Increment range (to): ",
           "Start Keyword:",
           "End Keyword:",
-            "Email:"
+            "Email:",
+            "Remove Keyword:",
+            "Replace Keyword:"
         };
 
          //Create a text area.
@@ -427,7 +432,13 @@ public class InfoCrawlerGUI2 extends JPanel
         emailField.setColumns(20);
         fields[fieldNum++] = emailField;
         
-
+        key3Field = new JTextField();
+        key3Field.setColumns(20);
+        fields[fieldNum++] = key3Field;
+        
+        key4Field = new JTextField();
+        key4Field.setColumns(20);
+        fields[fieldNum++] = key4Field;
 
         for (int i = 0; i < labelStrings.length; i++) {
             labels[i] = new JLabel(labelStrings[i],
@@ -454,54 +465,7 @@ public class InfoCrawlerGUI2 extends JPanel
     }
     
     protected JComponent createEntryFields2() {
-        JPanel panel = new JPanel(new SpringLayout());
-        
-        String[] labelStrings = {
-          "Remove Keyword:",
-          "Replace Keyword:"
-        };
-
-        JLabel[] labels = new JLabel[labelStrings.length];
-        JComponent[] fields = new JComponent[labelStrings.length];
-        int fieldNum = 0;
-
-        key3Field = new JTextField();
-        key3Field.setColumns(20);
-        fields[fieldNum++] = key3Field;
-
-        key4Field = new JTextField();
-        key4Field.setColumns(20);
-        fields[fieldNum++] = key4Field;
-
-        for (int i = 0; i < labelStrings.length; i++) {
-            labels[i] = new JLabel(labelStrings[i],
-                                   JLabel.TRAILING);
-            labels[i].setLabelFor(fields[i]);
-            panel.add(labels[i]);
-            panel.add(fields[i]);
-
-            JTextField tf = null;
-            if (fields[i] instanceof JSpinner) {
-                tf = getTextField((JSpinner)fields[i]);
-            } else {
-                tf = (JTextField)fields[i];
-            }
-            tf.addActionListener(this);
-            tf.addFocusListener(this);
-        }
-        panel.setBorder(BorderFactory.createEmptyBorder(
-                                GAP/2,
-                                0,    
-                                GAP/2, 
-                                0));  
-        panel.add(new JSeparator(JSeparator.VERTICAL),
-                  BorderLayout.LINE_START);
-        SpringUtilities.makeCompactGrid(panel,
-                                        labelStrings.length, 2,
-                                        GAP, GAP, 
-                                        GAP, GAP);
-        
-        return panel;
+        return null;
     }
    
     public JFormattedTextField getTextField(JSpinner spinner) {

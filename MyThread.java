@@ -59,7 +59,6 @@ public class MyThread extends Thread {
             System.out.println("Do you want to use filter?(y/n)");
             input_string = info.input_command("Command:");
             if(input_string.equals("y")){
-                filter_set = 1;
                 System.out.println("Enter Remove Keyword");
                 remove_keyword = info.input_command("Keyword:");
                 System.out.println("Enter Replace Keyword(Can be empty)");
@@ -71,11 +70,20 @@ public class MyThread extends Thread {
                         filter.ReplaceKeywordWithinString(sr[i],remove_keyword,replace_keyword);
                     }
                 }
+                if(set.mode == 1){
+                    int i;
+                    for(i=0;i<count;i++){
+                        //long threadId = Thread.currentThread().getId();
+                        System.out.println(sr[i].result_string);
+                    }
+                }
             }else if(input_string.equals("n")){
                 filter_set = 1;
-            }else{
+            }
+            else{
                 System.out.println("Yes/No? (y/n) input y or n only");
             }
+            
         }
         int i;
         if(set.save_select == true){

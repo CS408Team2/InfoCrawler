@@ -315,30 +315,32 @@ public class InfoCrawler  {
                 i++;
                 set.BaseURL = args[i];
                 url_set = true;
-            }else if(args[i].equals("-range")){
+            }else if(args[i].equals("-Range")){
                 range_set = true;
                 i++;
                 set.increment_from = Integer.parseInt(args[i]);
                 i++;
                 set.increment_to = Integer.parseInt(args[i]);
-            }else if(args[i].equals("-interval")){
+            }else if(args[i].equals("-Interval")){
                 interval_set = true;
                 i++;
                 set.time_interval = Integer.parseInt(args[i]);
-            }else if(args[i].equals("-keyword")){
+            }else if(args[i].equals("-Keyword")){
                 keyword_set = true;
                 i++;
                 set.start_keyword = args[i];
                 i++;
                 set.end_keyword = args[i];
             }
+            MyThread myThread = new MyThread(set,0);
+            try{
+                myThread.start();
+            }catch(Exception e){
+                System.out.println("Exception Caught, Please Enter valid settings");
+                e.printStackTrace();
+            }
         }
-        if(mode_set==false){
-            set.mode = mode_selection();
-        }
-        if(url_set==false){
-            set.BaseURL = input_command("URL:");
-        }
+        
         return set;
     }
     public static void main(String[] args) {
