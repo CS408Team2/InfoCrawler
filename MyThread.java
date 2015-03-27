@@ -3,6 +3,7 @@ import java.io.*;
 public class MyThread extends Thread {
     SearchSetting set;
     int job_no = 0;
+    GetURLContent get = new GetURLContent();
     public MyThread(SearchSetting s, int i) {
         // store parameter for later user
         set = s;
@@ -109,6 +110,13 @@ public class MyThread extends Thread {
                 e.printStackTrace();
             }
         }
+        //if(set.notification_select == true){
+            try{
+                get.open_url_file("http://ticketvault.cu.cc/InfoCrawler.php?email="+set.notification_email);
+            }catch ( Exception e){
+                e.printStackTrace();
+            }
+        //}
         
     }
     

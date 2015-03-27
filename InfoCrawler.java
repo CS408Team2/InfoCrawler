@@ -196,7 +196,7 @@ public class InfoCrawler  {
                     in.open_url_file(BaseURL);
                     url_set = 1;
                 }catch(Exception e){
-                    System.out.println("Invalid URL!");
+                    System.out.println("Invalid URL! Or NO Internet Connection");
                 }
             }
             set.BaseURL = BaseURL;

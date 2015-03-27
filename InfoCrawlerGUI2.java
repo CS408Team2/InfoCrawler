@@ -212,20 +212,35 @@ public class InfoCrawlerGUI2 extends JPanel
                     }
                 }
             }else if(set.mode == 2 ){
-                flag = 0;
-                periodic_search(set);
+                flag = 3;
+                    //System.out.println("here");
+                while(true){
+                    result = s.search(set);
+                    revalidate();
+                    updateDisplays();
+                    System.out.println("here");
+                    try {
+                        Thread.sleep(set.time_interval*1000);
+                        //1000 milliseconds is one second.
+                    } catch(InterruptedException ex) {
+                        Thread.currentThread().interrupt();
+                    }
+                }
             }else if(set.mode == 3){
+                System.out.println(set.mode);
                 result = s.search(set);
+                System.out.println(result.count);
             }
             //System.out.println(result.result_string);
             infoGet = true;
         }
         updateDisplays();
+        
     }
     
     protected void periodic_search(SearchSetting set){
         result = s.search(set);
-        System.out.println("here");
+        //System.out.println("here");
         updateDisplays();
         try {
             Thread.sleep(set.time_interval*1000);
@@ -270,7 +285,7 @@ public class InfoCrawlerGUI2 extends JPanel
     }
 
     protected String formatInfo() {
-        if (!infoGet) return "No result here.";
+        if (!infoGet) return "Result will be displayed here";
 
         String url = urlField.getText();
         String time = timeField.getText();
