@@ -70,12 +70,14 @@ public class InfoCrawler  {
         String input_string;
         String start_keyword;
         String end_keyword;
-        System.out.println("\n======Please Select Mode======\n-r Repeat Mode\n-p Periodic Mode");
+        System.out.println("\n======Please Select Mode======\n-r Repeat Mode\n-p Periodic Mode\n-s Single Page");
         input_string = input_command("Command:");
         if(input_string.equals("-r")){
             mode = 1;
         }else if(input_string.equals("-p")){
             mode = 2;
+        }else if(input_string.equals("-s")){
+            mode = 3;
         }else{
             System.out.println("Error:Please select from available mode");
         }
@@ -185,6 +187,19 @@ public class InfoCrawler  {
                     System.out.println("Please input a Integer");
                 }
             }
+        }else if(mode == 3){
+            System.out.println("\n======Please enter the URL=====");
+            System.out.println("Also add 'http://' or 'https://' in front");
+            while(url_set==0){
+                try{
+                    BaseURL = input_command("URL:");
+                    in.open_url_file(BaseURL);
+                    url_set = 1;
+                }catch(Exception e){
+                    System.out.println("Invalid URL!");
+                }
+            }
+            set.BaseURL = BaseURL;
         }
         int keyword_set = 0;
         int html_element_set = 0;

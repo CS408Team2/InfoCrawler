@@ -18,6 +18,8 @@ public class MyThread extends Thread {
             count = 1;
         }
         SearchResult sr[] = new SearchResult[count];
+        SearchResult sr_s = new SearchResult();
+
         if(set.mode == 2){
             while(true){
                 sr[0] = s.search(set);
@@ -39,6 +41,8 @@ public class MyThread extends Thread {
                 k++;
             }
             count = k;
+        }else if(set.mode == 3){
+            sr_s = s.search(set);
         }
         if(set.mode == 1){
             int i;
@@ -46,6 +50,8 @@ public class MyThread extends Thread {
                 //long threadId = Thread.currentThread().getId();
                 System.out.println(sr[i].result_string);
             }
+        }else if(set.mode == 3){
+            System.out.println(sr_s.result_string);
         }
         //Filter
         ReplaceKeyword filter = new ReplaceKeyword();
@@ -69,6 +75,8 @@ public class MyThread extends Thread {
                         //long threadId = Thread.currentThread().getId();
                         filter.ReplaceKeywordWithinString(sr[i],remove_keyword,replace_keyword);
                     }
+                }else if(set.mode == 3){
+                    filter.ReplaceKeywordWithinString(sr_s,remove_keyword,replace_keyword);
                 }
                 if(set.mode == 1){
                     int i;
@@ -76,6 +84,8 @@ public class MyThread extends Thread {
                         //long threadId = Thread.currentThread().getId();
                         System.out.println(sr[i].result_string);
                     }
+                }else if(set.mode == 3){
+                    System.out.println(sr_s.result_string);
                 }
             }else if(input_string.equals("n")){
                 filter_set = 1;

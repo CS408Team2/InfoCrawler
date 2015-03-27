@@ -74,6 +74,8 @@ public class InfoCrawlerGUI2 extends JPanel
         DefaultComboBoxModel mode = new DefaultComboBoxModel();
         mode.addElement("Repeat");
         mode.addElement("Periodic");
+        mode.addElement("Single Page");
+
         comboBox3 = new JComboBox(mode);
         panel.add(comboBox3);
         
@@ -179,8 +181,10 @@ public class InfoCrawlerGUI2 extends JPanel
             }
             if(comboBox3.getSelectedItem().equals("Repeat")){
                 set.mode = 1;
+            }else if(comboBox3.getSelectedItem().equals("Single Page")){
+                set.mode = 3;
             }else{
-                set.mode = 2;
+                set.mode = 3;
             }
             //System.out.println(key1);
             int count = set.increment_to - set.increment_from+1;
@@ -210,6 +214,8 @@ public class InfoCrawlerGUI2 extends JPanel
             }else if(set.mode == 2 ){
                 flag = 0;
                 periodic_search(set);
+            }else if(set.mode == 3){
+                result = s.search(set);
             }
             //System.out.println(result.result_string);
             infoGet = true;
@@ -312,6 +318,12 @@ public class InfoCrawlerGUI2 extends JPanel
         }else if(set.mode == 1 ){
             //System.out.println("here");
             sb.append(repeat_mode_string);
+        }else if(set.mode == 3){
+            for(i=0;i<result.count;i++){
+                //System.out.println(result.result_array[i]);
+                sb.append(result.result_array[i]);
+                sb.append("<p>");
+            }
         }
         sb.append("</p></html>");
         /*sb.append("<html><p align=left>");
